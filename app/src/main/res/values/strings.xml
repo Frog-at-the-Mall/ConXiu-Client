@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">NFC Project</string>
+    <string name='welcome'>Hold tag against back of device to scan</string>
+    <string name='image_description'>logo for app</string>
+    <string name='welcome_title'>ARG</string>
+    <string name="welcome_button">ENTER</string>
+    <string name="bad_location">You are not in the vicinity of the node\'s permanent location.</string>
+    <string name="bad_tag">something has gone wrong –\nwithin ten metres from node\nlinks you to the net\n\nverify network signal\nconfirm coordinates</string>
+    <string name="type_here">type here</string>
+    <string name="global">GLOBAL</string>
+    <string name="local">LOCAL</string>
+    <string name="name">竜思念形態</string>
+
+    //REPRESENTATION DISCLAIMER
+    //IMPORTANT: THE DEFAULT TRUE VALUE REPRESENTS THE FINAL NODE, NODES ARE SET TRUE WHEN THE NEXT NODE IS TO BE UNLOCKED
+    //this also helps mask the k/v pair in Shared Preferences from root tinkerers... but I'll implement Encrypted Shared Preferences in the future
+    <string name="BRCT">false</string> //default values for Global BR to be stored in shared preferences
+    <string name="BRTL">false</string>
+    <string name="BRML">false</string>
+    <string name="BRBR">false</string>
+    <string name="BRTR">false</string>
+    <string name="BRMR">false</string>
+    <string name="BRCB">false</string>
+    <string name="BRBL">false</string>
+    <string name="BRCM">true</string>
+
+    <string name="BLCT">false</string> //default values for Global BL to be stored in shared preferences
+    <string name="BLTL">false</string>
+    <string name="BLML">false</string>
+    <string name="BLBR">false</string>
+    <string name="BLTR">false</string>
+    <string name="BLMR">false</string>
+    <string name="BLCB">false</string>
+    <string name="BLBL">true</string>
+    <string name="BLCM">false</string>
+
+    <string name="CBCT">false</string> //default values for Global CB to be stored in shared preferences
+    <string name="CBTL">false</string>
+    <string name="CBML">false</string>
+    <string name="CBBR">false</string>
+    <string name="CBTR">false</string>
+    <string name="CBMR">false</string>
+    <string name="CBCB">true</string>
+    <string name="CBBL">false</string>
+    <string name="CBCM">false</string>
+
+    <string name="CMCT">false</string> //default values for Global CM to be stored in shared preferences
+    <string name="CMTL">false</string>
+    <string name="CMML">false</string>
+    <string name="CMBR">false</string>
+    <string name="CMTR">false</string>
+    <string name="CMMR">true</string>
+    <string name="CMCB">false</string>
+    <string name="CMBL">false</string>
+    <string name="CMCM">false</string>
+
+    <string name="CTCT">false</string> //default values for Global CT to be stored in shared preferences
+    <string name="CTTL">false</string>
+    <string name="CTML">false</string>
+    <string name="CTBR">false</string>
+    <string name="CTTR">true</string>
+    <string name="CTMR">false</string>
+    <string name="CTCB">false</string>
+    <string name="CTBL">false</string>
+    <string name="CTCM">false</string>
+
+    <string name="TRCT">false</string> //default values for Global TR to be stored in shared preferences
+    <string name="TRTL">false</string>
+    <string name="TRML">false</string>
+    <string name="TRBR">true</string>
+    <string name="TRTR">false</string>
+    <string name="TRMR">false</string>
+    <string name="TRCB">false</string>
+    <string name="TRBL">false</string>
+    <string name="TRCM">false</string>
+
+    <string name="TLCT">false</string> //default values for Global TL to be stored in shared preferences
+    <string name="TLTL">false</string>
+    <string name="TLML">true</string>
+    <string name="TLBR">false</string>
+    <string name="TLTR">false</string>
+    <string name="TLMR">false</string>
+    <string name="TLCB">false</string>
+    <string name="TLBL">false</string>
+    <string name="TLCM">false</string>
+
+    <string name="MLCT">false</string> //default values for Global ML to be stored in shared preferences
+    <string name="MLTL">true</string>
+    <string name="MLML">false</string>
+    <string name="MLBR">false</string>
+    <string name="MLTR">false</string>
+    <string name="MLMR">false</string>
+    <string name="MLCB">false</string>
+    <string name="MLBL">false</string>
+    <string name="MLCM">false</string>
+
+    <string name="MRCT">true</string> //default values for Global MR to be stored in shared preferences
+    <string name="MRTL">false</string>
+    <string name="MRML">false</string>
+    <string name="MRBR">false</string>
+    <string name="MRTR">false</string>
+    <string name="MRMR">false</string>
+    <string name="MRCB">false</string>
+    <string name="MRBL">false</string>
+    <string name="MRCM">false</string>
+
+</resources>
