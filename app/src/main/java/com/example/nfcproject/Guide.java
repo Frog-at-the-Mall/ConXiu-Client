@@ -35,6 +35,8 @@ import com.google.android.gms.tasks.Task;
 ///will be commenting more about this stuff soon once we get ui figured out so we know when to invoke fragments/activities.
 ///very similar to my "test media class" link to my github on discord
 
+//adding comment here to check if privileges on github are sound
+
 public class Guide extends AppCompatActivity implements SensorEventListener {
 
     int PERMISSION_ID = 44;
