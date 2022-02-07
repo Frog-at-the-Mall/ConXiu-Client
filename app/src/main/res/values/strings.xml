@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">NFC Project</string>
+    <string name="app_name">ConXiu</string>
     <string name='welcome'>Hold tag against back of device to scan</string>
     <string name='image_description'>logo for app</string>
     <string name='welcome_title'>ARG</string>
-    <string name="welcome_button">ENTER</string>
+    <string name="welcome_button">Login</string>
     <string name="bad_location">You are not in the vicinity of the node\'s permanent location.</string>
     <string name="bad_tag">something has gone wrong –\nwithin ten metres from node\nlinks you to the net\n\nverify network signal\nconfirm coordinates</string>
     <string name="type_here">type here</string>
     <string name="global">GLOBAL</string>
     <string name="local">LOCAL</string>
-    <string name="name">竜思念形態</string>
+    <string name="name">ConXiu</string>
 
     //REPRESENTATION DISCLAIMER
     //IMPORTANT: THE DEFAULT TRUE VALUE REPRESENTS THE FINAL NODE, NODES ARE SET TRUE WHEN THE NEXT NODE IS TO BE UNLOCKED
