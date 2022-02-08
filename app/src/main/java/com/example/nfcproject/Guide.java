@@ -1,5 +1,7 @@
 package com.example.nfcproject;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Looper;
@@ -43,6 +46,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     private static final String TAG = "tag";
     private SensorManager mSensorManager;
     private FusedLocationProviderClient mFusedLocationClient;
+    MediaPlayer mp = new MediaPlayer();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +58,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         //google map
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //media player
-        MediaPlayer mp = new MediaPlayer();
+
 
     }
 
@@ -70,7 +74,38 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        Log.d(TAG, "onSensorChanged: confirmed ");
+        Log.d(TAG, "onSensorChanged: confirmed " + event);
+        //4 state radial audio tracker
+        float degree = Math.round(event.values[0]);
+        float leftVol = degree/1000;
+        float rightVol= degree /1000;
+
+        ///still has bugs facing forward
+        //facing forward
+        if(degree > 315 && degree < 45){
+            leftVol = 1;
+            rightVol = 1;
+        }
+        //facing left
+        if(degree < 315 && degree > 225){
+            leftVol = 0;
+            rightVol = 1;
+        }
+        //facing backwards
+        if(degree < 225 && degree > 135){
+            leftVol = 0;
+            rightVol = 0;
+        }
+        //facing right
+        if(degree < 135 && degree > 45){
+            leftVol = 1;
+            rightVol =0;
+        }
+
+        mp.setVolume(leftVol,rightVol);
+        Log.d(TAG, "onSensorChanged: volume");
+
+        getLastLocation();
 
     }
 
