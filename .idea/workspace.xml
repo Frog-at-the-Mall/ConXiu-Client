@@ -14,13 +14,18 @@
   <component name="ChangeListManager">
     <list default="true" id="d066110b-f9c3-41f2-9695-c53fc0b80f5b" name="Default Changelist" comment="started implementing states for Guide to be in while guiding">
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/nfcproject/Guide.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/nfcproject/Guide.java" afterDir="false" />
+    </list>
+    <list id="ccf6fd59-406a-403f-960c-6bb40483a741" name="started implementing states for Guide to be in while guiding" comment="">
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[R58N22RZ2QB]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\mattb\.android\avd\Pixel_API_28.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -160,6 +165,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="d066110b-f9c3-41f2-9695-c53fc0b80f5b" name="Default Changelist" comment="" />
+      <changelist id="ccf6fd59-406a-403f-960c-6bb40483a741" name="started implementing states for Guide to be in while guiding" comment="" />
       <created>1643896697669</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -179,7 +185,21 @@
       <option name="project" value="LOCAL" />
       <updated>1644296465208</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="started implementing states for Guide to be in while guiding">
+      <created>1644296924433</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1644296924433</updated>
+    </task>
+    <task id="LOCAL-00004" summary="started implementing states for Guide to be in while guiding">
+      <created>1644296984921</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1644296984921</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -187,7 +207,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

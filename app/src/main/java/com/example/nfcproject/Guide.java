@@ -49,6 +49,8 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     private SensorManager mSensorManager;
     private FusedLocationProviderClient mFusedLocationClient;
     MediaPlayer mp;
+    Location myLocation;
+    Location myDestination;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,10 +77,11 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
         Log.d(TAG, "onSensorChanged: confirmed " + event);
         //4 state radial audio tracker
+        SensorEvent eventX = event;
 
         //main state (though im not sure how healthy it is to have guide always in a "listening state" through its SensorEventListener implementation
         // probably doesn't matter)
-        guideGuiding(event);
+        guideGuiding(event, myLocation,myDestination);
 
         //i added this to put updates in but not sure this that's the safest way.
         getLastLocation();
@@ -236,7 +239,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
 
     //guiding state from which all things will probably grow.
-    public void guideGuiding (SensorEvent event){
+    public void guideGuiding (SensorEvent event, Location myLocation, Location myDestination){
 
         float degree = Math.round(event.values[0]);
         float leftVol = degree/1000;
@@ -267,6 +270,10 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         mp.setVolume(leftVol,rightVol);
         Log.d(TAG, "onSensorChanged: volume");
 
+        ///use heading and bearing to find path
+        float bearing = myLocation.bearingTo(myDestination);
+
+
     }
 
     //state in which guide is completing its task
@@ -279,5 +286,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     public void guideBoundary(){
 
     }
+
+
 }
 
