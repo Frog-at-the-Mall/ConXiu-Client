@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "GUIDE TAG";
 
+    private Button welcome_login_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,11 +142,16 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        welcome_login_btn = findViewById(R.id.welcome_button_login);
+        welcome_login_btn.setOnClickListener(v -> startLogin());
+
         InitialFragment iff = InitialFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.replaceFrame, iff, "InitialFragment")
                 .commit();
-    }
+
+
+    } //End OnCreate
 
     public void onClick(View v) {
         GlobalFragment gf = GlobalFragment.newInstance();
@@ -525,6 +532,12 @@ public class MainActivity extends AppCompatActivity {
         float distanceBetweenDeviceAndTag = deviceLocation.distanceTo(tagLocation);
 
         return distanceBetweenDeviceAndTag < 20;
+    }
+
+    private void startLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 
