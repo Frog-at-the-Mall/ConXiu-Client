@@ -34,6 +34,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+
 
 ///will be commenting more about this stuff soon once we get ui figured out so we know when to invoke fragments/activities.
 ///very similar to my "test media class" link to my github on discord
@@ -46,7 +48,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     private static final String TAG = "tag";
     private SensorManager mSensorManager;
     private FusedLocationProviderClient mFusedLocationClient;
-    MediaPlayer mp = new MediaPlayer();
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,13 +59,10 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         //google map
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        //media player
-
+        //guide prep
+        guidePrepare();
 
     }
-
-
-
 
     //add constructors for parameters like ==> Guide guide(getDestination(), getOtherStuff());
     public Guide() {
@@ -76,36 +75,15 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
         Log.d(TAG, "onSensorChanged: confirmed " + event);
         //4 state radial audio tracker
-        float degree = Math.round(event.values[0]);
-        float leftVol = degree/1000;
-        float rightVol= degree /1000;
 
-        ///still has bugs facing forward
-        //facing forward
-        if(degree > 315 && degree < 45){
-            leftVol = 1;
-            rightVol = 1;
-        }
-        //facing left
-        if(degree < 315 && degree > 225){
-            leftVol = 0;
-            rightVol = 1;
-        }
-        //facing backwards
-        if(degree < 225 && degree > 135){
-            leftVol = 0;
-            rightVol = 0;
-        }
-        //facing right
-        if(degree < 135 && degree > 45){
-            leftVol = 1;
-            rightVol =0;
-        }
+        //main state (though im not sure how healthy it is to have guide always in a "listening state" through its SensorEventListener implementation
+        // probably doesn't matter)
+        guideGuiding(event);
 
-        mp.setVolume(leftVol,rightVol);
-        Log.d(TAG, "onSensorChanged: volume");
-
+        //i added this to put updates in but not sure this that's the safest way.
         getLastLocation();
+
+
 
     }
 
@@ -236,7 +214,70 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         }
     }
 
+    //useless method for testing
     public int getPermID(){
         return PERMISSION_ID;
     }
+
+
+
+    //GUIDE STATESSTATESSTATESSTATESSTATESSTATESSTATES///
+    //preparing state i.e. gathering mediafiles
+    public void guidePrepare(){
+        mp = new MediaPlayer();
+        try {
+            mp.prepare();
+            mp.getMetrics();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //guiding state from which all things will probably grow.
+    public void guideGuiding (SensorEvent event){
+
+        float degree = Math.round(event.values[0]);
+        float leftVol = degree/1000;
+        float rightVol= degree /1000;
+
+        ///still has bugs facing forward
+        //facing forward
+        if(degree > 315 && degree < 45){
+            leftVol = 1;
+            rightVol = 1;
+        }
+        //facing left
+        if(degree < 315 && degree > 225){
+            leftVol = 0;
+            rightVol = 1;
+        }
+        //facing backwards
+        if(degree < 225 && degree > 135){
+            leftVol = 0;
+            rightVol = 0;
+        }
+        //facing right
+        if(degree < 135 && degree > 45){
+            leftVol = 1;
+            rightVol =0;
+        }
+
+        mp.setVolume(leftVol,rightVol);
+        Log.d(TAG, "onSensorChanged: volume");
+
+    }
+
+    //state in which guide is completing its task
+    public void guideFinalizing(){
+
+        mp.release();
+
+    }
+    ///state in which guide is on the boundary between to proximity zones.
+    public void guideBoundary(){
+
+    }
 }
+
