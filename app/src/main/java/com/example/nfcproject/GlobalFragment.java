@@ -27,7 +27,7 @@ public class GlobalFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((MainActivity) Objects.requireNonNull(getActivity())).checkPermission(); //check for permissions immediately upon entering the global fragment
+        ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the global fragment
         final View fragGlobal = inflater.inflate(R.layout.fragment_global, container, false);
         Button toLocalBR = fragGlobal.findViewById(R.id.toLocalBR);
         toLocalBR.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +35,7 @@ public class GlobalFragment extends Fragment {
             public void onClick(View v) {
                 Log.i("global_frag", "I hear you clicked BR");
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -48,7 +48,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -60,7 +60,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -72,7 +72,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -84,7 +84,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -96,7 +96,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -108,7 +108,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -120,7 +120,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
@@ -132,7 +132,7 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LocalFragment lf = LocalFragment.newInstance();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, lf, "LocalFragment")
                         .addToBackStack(null)
                         .commit();
