@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "GUIDE TAG";
 
+    private Button welcome_login_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,11 +125,16 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        welcome_login_btn = findViewById(R.id.welcome_button_login);
+        welcome_login_btn.setOnClickListener(v -> startLogin());
+
         InitialFragment iff = InitialFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.replaceFrame, iff, "InitialFragment")
                 .commit();
-    }
+
+
+    } //End OnCreate
 
     public void onClick(View v) {
         SagaMenuFragment smf = SagaMenuFragment.newInstance();
@@ -510,4 +517,111 @@ public class MainActivity extends AppCompatActivity {
         return distanceBetweenDeviceAndTag < 20;
     }
 
+<<<<<<< HEAD
+=======
+    private void startLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+
+//could be a server call down the road
+    private void setSharedPreferencesDefaults() {
+        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        //get defaults of all 81 nodes
+        editor.putBoolean("BRCT", Boolean.parseBoolean(getString(R.string.BRCT)));
+        editor.putBoolean("BRTL", Boolean.parseBoolean(getString(R.string.BRTL)));
+        editor.putBoolean("BRML", Boolean.parseBoolean(getString(R.string.BRML)));
+        editor.putBoolean("BRBR", Boolean.parseBoolean(getString(R.string.BRBR)));
+        editor.putBoolean("BRTR", Boolean.parseBoolean(getString(R.string.BRTR)));
+        editor.putBoolean("BRMR", Boolean.parseBoolean(getString(R.string.BRMR)));
+        editor.putBoolean("BRCB", Boolean.parseBoolean(getString(R.string.BRCB)));
+        editor.putBoolean("BRBL", Boolean.parseBoolean(getString(R.string.BRBL)));
+        editor.putBoolean("BRCM", Boolean.parseBoolean(getString(R.string.BRCM))); Log.i("main activity defaults method", getString(R.string.BRCM));
+
+        editor.putBoolean("BLCT", Boolean.parseBoolean(getString(R.string.BLCT)));
+        editor.putBoolean("BLTL", Boolean.parseBoolean(getString(R.string.BLTL)));
+        editor.putBoolean("BLML", Boolean.parseBoolean(getString(R.string.BLML)));
+        editor.putBoolean("BLBR", Boolean.parseBoolean(getString(R.string.BLBR)));
+        editor.putBoolean("BLTR", Boolean.parseBoolean(getString(R.string.BLTR)));
+        editor.putBoolean("BLMR", Boolean.parseBoolean(getString(R.string.BLMR)));
+        editor.putBoolean("BLCB", Boolean.parseBoolean(getString(R.string.BLCB)));
+        editor.putBoolean("BLBL", Boolean.parseBoolean(getString(R.string.BLBL)));
+        editor.putBoolean("BLCM", Boolean.parseBoolean(getString(R.string.BLCM)));
+
+        editor.putBoolean("CBCT", Boolean.parseBoolean(getString(R.string.CBCT)));
+        editor.putBoolean("CBTL", Boolean.parseBoolean(getString(R.string.CBTL)));
+        editor.putBoolean("CBML", Boolean.parseBoolean(getString(R.string.CBML)));
+        editor.putBoolean("CBBR", Boolean.parseBoolean(getString(R.string.CBBR)));
+        editor.putBoolean("CBTR", Boolean.parseBoolean(getString(R.string.CBTR)));
+        editor.putBoolean("CBMR", Boolean.parseBoolean(getString(R.string.CBMR)));
+        editor.putBoolean("CBCB", Boolean.parseBoolean(getString(R.string.CBCB)));
+        editor.putBoolean("CBBL", Boolean.parseBoolean(getString(R.string.CBBL)));
+        editor.putBoolean("CBCM", Boolean.parseBoolean(getString(R.string.CBCM)));
+
+        editor.putBoolean("CMCT", Boolean.parseBoolean(getString(R.string.CMCT)));
+        editor.putBoolean("CMTL", Boolean.parseBoolean(getString(R.string.CMTL)));
+        editor.putBoolean("CMML", Boolean.parseBoolean(getString(R.string.CMML)));
+        editor.putBoolean("CMBR", Boolean.parseBoolean(getString(R.string.CMBR)));
+        editor.putBoolean("CMTR", Boolean.parseBoolean(getString(R.string.CMTR)));
+        editor.putBoolean("CMMR", Boolean.parseBoolean(getString(R.string.CMMR)));
+        editor.putBoolean("CMCB", Boolean.parseBoolean(getString(R.string.CMCB)));
+        editor.putBoolean("CMBL", Boolean.parseBoolean(getString(R.string.CMBL)));
+        editor.putBoolean("CMCM", Boolean.parseBoolean(getString(R.string.CMCM)));
+
+        editor.putBoolean("CTCT", Boolean.parseBoolean(getString(R.string.CTCT)));
+        editor.putBoolean("CTTL", Boolean.parseBoolean(getString(R.string.CTTL)));
+        editor.putBoolean("CTML", Boolean.parseBoolean(getString(R.string.CTML)));
+        editor.putBoolean("CTBR", Boolean.parseBoolean(getString(R.string.CTBR)));
+        editor.putBoolean("CTTR", Boolean.parseBoolean(getString(R.string.CTBR)));
+        editor.putBoolean("CTMR", Boolean.parseBoolean(getString(R.string.CTMR)));
+        editor.putBoolean("CTCB", Boolean.parseBoolean(getString(R.string.CTCB)));
+        editor.putBoolean("CTBL", Boolean.parseBoolean(getString(R.string.CTBL)));
+        editor.putBoolean("CTCM", Boolean.parseBoolean(getString(R.string.CTCM)));
+
+        editor.putBoolean("TRCT", Boolean.parseBoolean(getString(R.string.TRCT)));
+        editor.putBoolean("TRTL", Boolean.parseBoolean(getString(R.string.TRTL)));
+        editor.putBoolean("TRML", Boolean.parseBoolean(getString(R.string.TRML)));
+        editor.putBoolean("TRBR", Boolean.parseBoolean(getString(R.string.TRBR)));
+        editor.putBoolean("TRTR", Boolean.parseBoolean(getString(R.string.TRTR)));
+        editor.putBoolean("TRMR", Boolean.parseBoolean(getString(R.string.TRMR)));
+        editor.putBoolean("TRCB", Boolean.parseBoolean(getString(R.string.TRCB)));
+        editor.putBoolean("TRBL", Boolean.parseBoolean(getString(R.string.TRBL)));
+        editor.putBoolean("TRCM", Boolean.parseBoolean(getString(R.string.TRCM)));
+
+        editor.putBoolean("TLCT", Boolean.parseBoolean(getString(R.string.TLCT)));
+        editor.putBoolean("TLTL", Boolean.parseBoolean(getString(R.string.TLTL)));
+        editor.putBoolean("TLML", Boolean.parseBoolean(getString(R.string.TLML)));
+        editor.putBoolean("TLBR", Boolean.parseBoolean(getString(R.string.TLBR)));
+        editor.putBoolean("TLTR", Boolean.parseBoolean(getString(R.string.TLTR)));
+        editor.putBoolean("TLMR", Boolean.parseBoolean(getString(R.string.TLMR)));
+        editor.putBoolean("TLCB", Boolean.parseBoolean(getString(R.string.TLCB)));
+        editor.putBoolean("TLBL", Boolean.parseBoolean(getString(R.string.TLBL)));
+        editor.putBoolean("TLCM", Boolean.parseBoolean(getString(R.string.TLCM)));
+
+        editor.putBoolean("MRCT", Boolean.parseBoolean(getString(R.string.MRCT)));
+        editor.putBoolean("MRTL", Boolean.parseBoolean(getString(R.string.MRTL)));
+        editor.putBoolean("MRML", Boolean.parseBoolean(getString(R.string.MRML)));
+        editor.putBoolean("MRBR", Boolean.parseBoolean(getString(R.string.MRBR)));
+        editor.putBoolean("MRTR", Boolean.parseBoolean(getString(R.string.MRTR)));
+        editor.putBoolean("MRMR", Boolean.parseBoolean(getString(R.string.MRMR)));
+        editor.putBoolean("MRCB", Boolean.parseBoolean(getString(R.string.MRCB)));
+        editor.putBoolean("MRBL", Boolean.parseBoolean(getString(R.string.MRBL)));
+        editor.putBoolean("MRCM", Boolean.parseBoolean(getString(R.string.MRCM)));
+
+        editor.putBoolean("MLCT", Boolean.parseBoolean(getString(R.string.MLCT)));
+        editor.putBoolean("MLTL", Boolean.parseBoolean(getString(R.string.MLTL)));
+        editor.putBoolean("MLML", Boolean.parseBoolean(getString(R.string.MLML)));
+        editor.putBoolean("MLBR", Boolean.parseBoolean(getString(R.string.MLBR)));
+        editor.putBoolean("MLTR", Boolean.parseBoolean(getString(R.string.MLTR)));
+        editor.putBoolean("MLMR", Boolean.parseBoolean(getString(R.string.MLMR)));
+        editor.putBoolean("MLCB", Boolean.parseBoolean(getString(R.string.MLCB)));
+        editor.putBoolean("MLBL", Boolean.parseBoolean(getString(R.string.MLBL)));
+        editor.putBoolean("MLCM", Boolean.parseBoolean(getString(R.string.MLCM)));
+        editor.apply();
+    }
+
+>>>>>>> b91188f169aeb7a7bd8da9107709ed9087580fdc
 }
