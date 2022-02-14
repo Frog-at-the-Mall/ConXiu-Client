@@ -22,9 +22,10 @@ public class SagaMenuFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the global fragment
-        final View sagaMenu = inflater.inflate(R.layout.saga_menu, container, false);
-        Button toJourneyMenu = sagaMenu.findViewById(R.id.test_saga_button);
+        ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
+        final View SagaMenu = inflater.inflate(R.layout.saga_menu, container, false);
+
+        Button toJourneyMenu = SagaMenu.findViewById(R.id.test_saga_button); //to journey screen
         toJourneyMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,6 +37,18 @@ public class SagaMenuFragment extends Fragment {
                 //jmf.setLocalState("example state");         //just to carry over state as needed
             }
         });
-        return sagaMenu;
+
+        Button back = SagaMenu.findViewById(R.id.logo_button); //back to main menu
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InitialFragment iff = InitialFragment.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, iff, "InitialFragment")
+                        .commit();
+            }
+        });
+
+        return SagaMenu;
     }
 }
