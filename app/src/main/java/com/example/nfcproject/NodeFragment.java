@@ -45,10 +45,10 @@ public class NodeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //pass the desired node value to the localFragment so the right local game can be loaded.
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
-        locationManager = (LocationManager) Objects.requireNonNull(getContext()).getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -88,7 +88,7 @@ public class NodeFragment extends Fragment {
                 }
                 Log.i("node_answer", answerBlockString);
                 if (answerBlockString.equals("orange")){ //correct answer
-                    SharedPreferences sharedPref = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE); //write unlock node to shared preferences
+                    SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE); //write unlock node to shared preferences
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putBoolean(localPassed+nodePassed, true); //shared prefs value is updated to reveal next node in ARG
                     editor.apply();
