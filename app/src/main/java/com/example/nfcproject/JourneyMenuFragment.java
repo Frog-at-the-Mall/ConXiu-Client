@@ -23,7 +23,8 @@ public class JourneyMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) requireActivity()).checkPermission();
         final View JourneyMenu = inflater.inflate(R.layout.journey_menu, container, false);
-        Button toShrineMenu = JourneyMenu.findViewById(R.id.test_journey_button);
+
+        Button toShrineMenu = JourneyMenu.findViewById(R.id.test_journey_button); // to shrine menu
         toShrineMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +36,20 @@ public class JourneyMenuFragment extends Fragment {
                 //smf.setLocalState("example state");         //just to carry over state as needed
             }
         });
+
+        Button back = JourneyMenu.findViewById(R.id.journey_menu_back); //back button
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
+                        .addToBackStack(null)
+                        .commit();
+                //jmf.setLocalState("example state");         //just to carry over state as needed
+            }
+        });
+
         return JourneyMenu;
     }
 }

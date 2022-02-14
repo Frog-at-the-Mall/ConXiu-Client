@@ -6,7 +6,7 @@
     <string name="welcome_button">Login</string>
     <string name="bad_location">You are not in the vicinity of the node\'s permanent location.</string>
     <string name="bad_tag">something has gone wrong –\nwithin ten metres from node\nlinks you to the net\n\nverify network signal\nconfirm coordinates</string>
-    <string name="type_here">type here</string>
+    <string name="meditation_here">meditation here</string>
     <string name="global">GLOBAL</string>
     <string name="local">LOCAL</string>
     <string name="name">ConXiu</string>

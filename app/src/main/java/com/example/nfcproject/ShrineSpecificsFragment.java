@@ -20,7 +20,23 @@ public class ShrineSpecificsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the global fragment
+        ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
+
+        final View ShrineSpecifics = inflater.inflate(R.layout.shrine_specifics, container, false);
+
+        Button back = ShrineSpecifics.findViewById(R.id.shrine_specifics_back); //back button
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShrineMenuFragment smf = ShrineMenuFragment.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, smf, "ShrineMenuFragment")
+                        .addToBackStack(null)
+                        .commit();
+                //jmf.setLocalState("example state");         //just to carry over state as needed
+            }
+        });
+
         return inflater.inflate(R.layout.shrine_specifics, container, false);
     }
 }

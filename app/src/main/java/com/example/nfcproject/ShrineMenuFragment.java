@@ -20,9 +20,10 @@ public class ShrineMenuFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the global fragment
-        final View shrineMenu = inflater.inflate(R.layout.shrine_menu, container, false);
-        Button toShrineSpecifics = shrineMenu.findViewById(R.id.test_shrine_button);
+        ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
+        final View ShrineMenu = inflater.inflate(R.layout.shrine_menu, container, false);
+
+        Button toShrineSpecifics = ShrineMenu.findViewById(R.id.test_shrine_button); //to main game screen
         toShrineSpecifics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +35,20 @@ public class ShrineMenuFragment extends Fragment {
                 //ssf.setLocalState("example state");         //just to carry over state as needed
             }
         });
-        return shrineMenu;
+
+        Button back = ShrineMenu.findViewById(R.id.shrine_menu_back); //back button
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JourneyMenuFragment jmf = JourneyMenuFragment.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, jmf, "JourneyMenuFragment")
+                        .addToBackStack(null)
+                        .commit();
+                //jmf.setLocalState("example state");         //just to carry over state as needed
+            }
+        });
+
+        return ShrineMenu;
     }
 }
