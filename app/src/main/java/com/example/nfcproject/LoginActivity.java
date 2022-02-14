@@ -11,8 +11,14 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends Activity {
 
@@ -24,7 +30,7 @@ public class LoginActivity extends Activity {
     private EditText editT_username, editT_password;
 
     //Variables
-    private String username_str, password_str, password_rep_srt, email_reg_str, dataPassing_str;
+    private String username_str, password_str, password_rep_srt, email_reg_str, role_reg_str;
 
     //***   Login Page   ***//
 
@@ -39,7 +45,7 @@ public class LoginActivity extends Activity {
     //***   Database Utils  ***//
 
     // DB Login URL
-    public static final String URL = "http://10.0.2.2:3000/";           ////*** Needs changing when merge */
+    public static final String URL = "http://10.0.2.2:3000/login";
 
 
     //***   Volley Utils    ***//
@@ -129,17 +135,33 @@ public class LoginActivity extends Activity {
     public void login() {
         username_str = editT_username.getText().toString().trim();
         password_str = editT_password.getText().toString().trim();
-        dataPassing_str = "login?username=" + username_str + "&password=" + password_str;
-
         if(!username_str.isEmpty() && !password_str.isEmpty()) {
-            StringRequest strRequest = new StringRequest(Request.Method.POST, URL+dataPassing_str, response -> {
-                if (response.contains("success")) {
-                    openMainPage();
-                } else if (response.contains("failure")) {
-                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            JSONObject json = new JSONObject();
+            try {
+                json.put("username", username_str);
+                json.put("password", password_rep_srt);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"/login",json,response -> {
+                Boolean successCheck = false;
+                String returnMsg = "Error";
+                try {
+                    successCheck = (Boolean) response.get("success");
+                    returnMsg = (String) response.get("msg");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, error -> Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show());
-            mQueue.add(strRequest);
+                if (successCheck == true) {
+                    Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                    openMainPage();
+                } else {
+                    Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();
+                }
+            }, error -> Toast.makeText(LoginActivity.this, (CharSequence) error, Toast.LENGTH_SHORT).show());
+
+            mQueue.add(jsonRequest);
         }
     }
 
@@ -149,20 +171,36 @@ public class LoginActivity extends Activity {
         password_rep_srt = editT_password_rep.getText().toString().trim();
         email_reg_str = editT_email.getText().toString().trim();
 
+
         if(!username_str.isEmpty() && !password_str.isEmpty() && !password_rep_srt.isEmpty() && !email_reg_str.isEmpty()) {
             if(password_str.equals(password_rep_srt)) {
-                dataPassing_str = "register?username=" + username_str + "&email=" + email_reg_str + "&password=" + password_str;
-                StringRequest strRequest = new StringRequest(Request.Method.POST, URL + dataPassing_str, response -> {
-                    if (response.contains("success")) {
-                        openMainPage();
-                    } else if (response.contains("username")) {
-                        Toast.makeText(LoginActivity.this, "Username already in use", Toast.LENGTH_SHORT).show();
-                    } else if(response.contains("email")) {
-                        Toast.makeText(LoginActivity.this, "Email already in use", Toast.LENGTH_SHORT).show();
-                    }
-                }, error -> Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show());
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("username", username_str);
+                    json.put("email", email_reg_str);
+                    json.put("password", password_rep_srt);
+                    json.put("role","Seeker");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                mQueue.add(strRequest);
+                JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"/register",json,response -> {
+                            Boolean successCheck = false;
+                            String returnMsg = "Error";
+                            try {
+                                successCheck = (Boolean) response.get("success");
+                                returnMsg = (String) response.get("msg");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            if (successCheck == true) {
+                                Toast.makeText(LoginActivity.this, "Registration complete", Toast.LENGTH_SHORT).show();
+                                openLogPage();
+                            } else {
+                                Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();
+                            }
+                        }, error -> Toast.makeText(LoginActivity.this, (CharSequence) error, Toast.LENGTH_SHORT).show());
+                mQueue.add(jsonRequest);
             } else {
                 Toast.makeText(LoginActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             }
