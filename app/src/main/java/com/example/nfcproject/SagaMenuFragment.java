@@ -38,16 +38,16 @@ public class SagaMenuFragment extends Fragment {
             }
         });
 
-        Button back = SagaMenu.findViewById(R.id.logo_button); //back to main menu
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InitialFragment iff = InitialFragment.newInstance();
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.replaceFrame, iff, "InitialFragment")
-                        .commit();
-            }
-        });
+//        Button back = SagaMenu.findViewById(R.id.logo_button); //back to main menu
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                InitialFragment iff = InitialFragment.newInstance();
+//                requireActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.replaceFrame, iff, "InitialFragment")
+//                        .commit();
+//            }
+//        });
 
         return SagaMenu;
     }
