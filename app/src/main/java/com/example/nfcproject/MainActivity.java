@@ -124,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-
-        welcome_login_btn = findViewById(R.id.welcome_button_login);
-        welcome_login_btn.setOnClickListener(v -> startLogin());
+//
+//        welcome_login_btn = findViewById(R.id.welcome_button_login);
+//        welcome_login_btn.setOnClickListener(v -> startLogin());
 
         InitialFragment iff = InitialFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
@@ -519,11 +519,11 @@ public class MainActivity extends AppCompatActivity {
 
 //<<<<<<< HEAD
 //=======
-    private void startLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
+//    private void startLogin() {
+//        Intent intent = new Intent(this, LoginActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+//    }
 //
 //
 ////could be a server call down the road

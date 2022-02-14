@@ -37,6 +37,6 @@ public class ShrineSpecificsFragment extends Fragment {
             }
         });
 
-        return inflater.inflate(R.layout.shrine_specifics, container, false);
+        return ShrineSpecifics;
     }
 }
