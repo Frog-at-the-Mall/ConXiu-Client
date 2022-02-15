@@ -125,9 +125,10 @@ public class LoginActivity extends Activity {
         editT_email.setText("");
     }
 
-    public void openMainPage() {
+    public void openMainPage(String username) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
@@ -139,7 +140,7 @@ public class LoginActivity extends Activity {
             JSONObject json = new JSONObject();
             try {
                 json.put("username", username_str);
-                json.put("password", password_rep_srt);
+                json.put("password", password_str);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -155,11 +156,11 @@ public class LoginActivity extends Activity {
                 }
                 if (successCheck == true) {
                     Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                    openMainPage();
+                    openMainPage(username_str);
                 } else {
                     Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();
                 }
-            }, error -> Toast.makeText(LoginActivity.this, (CharSequence) error, Toast.LENGTH_SHORT).show());
+            }, error -> Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show());
 
             mQueue.add(jsonRequest);
         }
@@ -185,21 +186,21 @@ public class LoginActivity extends Activity {
                 }
 
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"/register",json,response -> {
-                            Boolean successCheck = false;
-                            String returnMsg = "Error";
-                            try {
-                                successCheck = (Boolean) response.get("success");
-                                returnMsg = (String) response.get("msg");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            if (successCheck == true) {
-                                Toast.makeText(LoginActivity.this, "Registration complete", Toast.LENGTH_SHORT).show();
-                                openLogPage();
-                            } else {
-                                Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();
-                            }
-                        }, error -> Toast.makeText(LoginActivity.this, (CharSequence) error, Toast.LENGTH_SHORT).show());
+                    Boolean successCheck = false;
+                    String returnMsg = "Error";
+                    try {
+                        successCheck = (Boolean) response.get("success");
+                        returnMsg = (String) response.get("msg");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (successCheck == true) {
+                        Toast.makeText(LoginActivity.this, "Registration complete", Toast.LENGTH_SHORT).show();
+                        openLogPage();
+                    } else {
+                        Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();
+                    }
+                }, error -> Toast.makeText(LoginActivity.this, (CharSequence) error, Toast.LENGTH_SHORT).show());
                 mQueue.add(jsonRequest);
             } else {
                 Toast.makeText(LoginActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
