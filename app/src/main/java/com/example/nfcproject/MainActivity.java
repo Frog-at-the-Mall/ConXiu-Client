@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     private void showWirelessSettings() throws InterruptedException {
         Toast.makeText(this, "Enable NFC on your device", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
-        wait(2000); //wait 2 seconds for user to see toast, maybe implement button and redirect on user click in the future
+        //wait(2000); //wait 2 seconds for user to see toast, maybe implement button and redirect on user click in the future
         startActivity(intent);
     }
 
