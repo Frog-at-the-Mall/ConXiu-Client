@@ -38,16 +38,42 @@ public class SagaMenuFragment extends Fragment {
             }
         });
 
-//        Button back = SagaMenu.findViewById(R.id.logo_button); //back to main menu
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                InitialFragment iff = InitialFragment.newInstance();
-//                requireActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.replaceFrame, iff, "InitialFragment")
-//                        .commit();
-//            }
-//        });
+        Button newSaga = SagaMenu.findViewById(R.id.new_saga_button); //to new saga selection screen (seek or curate)
+        newSaga.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewSagaSelectionFragment nssf = NewSagaSelectionFragment.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, nssf, "NewSagaSelectionFragment")
+                        .addToBackStack(null)
+                        .commit();
+                //nssf.setLocalState("example state");         //just to carry over state as needed
+            }
+        });
+
+        Button profileConfig = SagaMenu.findViewById(R.id.profile_config_button); //to profile config screen
+        profileConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileConfigFragment pcf = ProfileConfigFragment.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, pcf, "ProfileConfigFragment")
+                        .addToBackStack(null)
+                        .commit();
+                //pcf.setLocalState("example state");         //just to carry over state as needed
+            }
+        });
+
+        Button back = SagaMenu.findViewById(R.id.logout_button); //back to main menu
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InitialFragment iff = InitialFragment.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, iff, "InitialFragment")
+                        .commit();
+            }
+        });
 
         return SagaMenu;
     }

@@ -16,5 +16,8 @@
     <string name="back_button">Back</string>
     <string name="journey_menu_header">Journey Menu</string>
     <string name="shrine_menu_header">Shrine Menu</string>
+    <string name="new_saga_select_seek">Seek</string>
+    <string name="new_saga_select_curate">Curate</string>
+    <string name="logout_button">Logout</string>
 
 </resources>

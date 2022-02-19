@@ -22,14 +22,12 @@
                 android:layout_weight="1"
                 android:text="@string/new_saga_button" />
 
-            <ImageButton
-                android:id="@+id/logo_button"
+            <Button
+                android:id="@+id/logout_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/app_name"
-                app:srcCompat="@mipmap/logo" />
+                android:text="@string/logout_button" />
 
             <Button
                 android:id="@+id/profile_config_button"
