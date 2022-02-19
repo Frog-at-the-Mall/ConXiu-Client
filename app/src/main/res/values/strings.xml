@@ -12,6 +12,7 @@
     <string name="name">ConXiu</string>
     <string name="new_saga_button">New\nSaga</string>
     <string name="profile_config_button">Profile\nConfig</string>
+    <string name="profile_config_header">Profile Config</string>
     <string name="saga_menu_header">Saga Menu</string>
     <string name="back_button">Back</string>
     <string name="journey_menu_header">Journey Menu</string>
