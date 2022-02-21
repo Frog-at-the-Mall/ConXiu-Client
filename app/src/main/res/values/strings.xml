@@ -12,7 +12,7 @@
     <string name="name">ConXiu</string>
     <string name="new_saga_button">New\nSaga</string>
     <string name="profile_config_button">Profile\nConfig</string>
-    <string name="profile_config_header">Profile Config</string>
+    <string name="profile_config_menu_header">Profile Config Menu</string>
     <string name="saga_menu_header">Saga Menu</string>
     <string name="back_button">Back</string>
     <string name="journey_menu_header">Journey Menu</string>
@@ -20,5 +20,13 @@
     <string name="new_saga_select_seek">Seek</string>
     <string name="new_saga_select_curate">Curate</string>
     <string name="logout_button">Logout</string>
+    <string name="profile_config_seeker_name_header">You are connected as seeker</string>
+    <string name="config_change_username_button">Change\nUsername</string>
+    <string name="username_hint">enter new username</string>
+    <string name="old_password_hint">enter current password</string>
+    <string name="first_new_password_hint">enter new password</string>
+    <string name="second_new_password_hint">re-enter new password</string>
+    <string name="change_credentials">Change Credentials Below</string>
+    <string name="submit">Submit</string>
 
 </resources>
