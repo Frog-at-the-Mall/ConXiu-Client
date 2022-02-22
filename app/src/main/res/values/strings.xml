@@ -28,5 +28,18 @@
     <string name="second_new_password_hint">re-enter new password</string>
     <string name="change_credentials">Change Credentials Below</string>
     <string name="submit">Submit</string>
+    <string name="curator_saga_menu_header">Curator Menu</string>
+    <string name="new_saga">New Saga</string>
+    <string name="curator_menu_header">Sagas</string>
+    <string name="new_journey_button">New Journey</string>
+    <string name="curator_journey_menu_header">Journeys</string>
+    <string name="curator_new_shrine_button">New Shrine</string>
+    <string name="curator_shrine_menu_header">Shrines</string>
+    <string name="curator_shrine_specifics_meditation">meditation</string>
+    <string name="curator_shrine_specifics_response">accepted response</string>
+    <string name="curator_shrine_specifics_location">shrine location</string>
+    <string name="curator_shrine_specifics_next_location">next location</string>
+    <string name="curator_shrine_specifics_nature">nature keyword</string>
+    <string name="curator_shrine_specifics_audio_path">audio path on disk</string>
 
 </resources>

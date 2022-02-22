@@ -17,13 +17,17 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3016304347826087" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash2.xml" value="0.3029891304347826" />
+        <entry key="app/src/main/res/layout/curate_saga_menu.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/curator_journey_menu.xml" value="0.18697916666666667" />
+        <entry key="app/src/main/res/layout/curator_shrine_menu.xml" value="0.1734375" />
+        <entry key="app/src/main/res/layout/curator_shrine_specifics_menu.xml" value="0.1734375" />
         <entry key="app/src/main/res/layout/fragment_global.xml" value="0.13500506585612967" />
         <entry key="app/src/main/res/layout/fragment_initial.xml" value="0.3029891304347826" />
         <entry key="app/src/main/res/layout/fragment_local.xml" value="0.3016304347826087" />
         <entry key="app/src/main/res/layout/fragment_node.xml" value="0.3016304347826087" />
         <entry key="app/src/main/res/layout/journey_menu.xml" value="0.3016304347826087" />
         <entry key="app/src/main/res/layout/new_saga_selection.xml" value="0.23606889564336372" />
-        <entry key="app/src/main/res/layout/profile_config.xml" value="0.15364583333333334" />
+        <entry key="app/src/main/res/layout/profile_config.xml" value="0.125" />
         <entry key="app/src/main/res/layout/saga_menu.xml" value="0.17572463768115942" />
         <entry key="app/src/main/res/layout/shrine_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/shrine_menu.xml" value="0.3016304347826087" />

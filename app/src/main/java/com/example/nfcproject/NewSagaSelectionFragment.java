@@ -36,6 +36,27 @@ public class NewSagaSelectionFragment extends Fragment {
             }
         });
 
+        Button seek = NewSagaSelection.findViewById(R.id.new_saga_select_seek_button);
+        seek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //toast for scanning a new tag
+            }
+        });
+
+        Button curate = NewSagaSelection.findViewById(R.id.new_saga_select_curate_button);
+        curate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CuratorSagaMenu csmf = CuratorSagaMenu.newInstance();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, csmf, "CuratorSagaMenuFragment")
+                        .addToBackStack(null)
+                        .commit();
+                //csmf.setLocalState("example state"); // carry over state as needed
+            }
+        });
+
         return NewSagaSelection;
     }
 }
