@@ -30,16 +30,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.nfcproject.Capsule.Byte_Array;
+import com.example.nfcproject.Capsule.Capsule;
+import com.example.nfcproject.Capsule.Encryption;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 //imports necessary for volley transactions
 
 public class MainActivity extends AppCompatActivity {
 
-    String nfcHash;
+    byte[][] journeyData;
+    double[] nextShrineLocation;
+    String meditation_message;
+
     PendingIntent pendingIntent;
     NfcAdapter nfcAdapter;
     private LocationManager locationManager;
@@ -175,7 +190,21 @@ public class MainActivity extends AppCompatActivity {
         NodeFragment testVisibility = (NodeFragment) getSupportFragmentManager().findFragmentByTag("NodeFragment");
         if (testVisibility != null && testVisibility.isAdded() && testVisibility.isVisible()) {
             if (checkPermission()) { //here is where we check for permissions... before invoking the method resolveIntent which begins our NFC blocks and GPS comparison ping
-                resolveIntent(intent);
+                try {
+                    resolveIntent(intent);
+                } catch (InvalidAlgorithmParameterException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                } catch (NoSuchPaddingException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                }
             } else {
                 Toast.makeText(this, "Permissions for NFC and/or Fine Location Access have been denied. Please allow permissions for use in the app.", Toast.LENGTH_SHORT).show();
             }
@@ -184,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void resolveIntent(Intent intent) {
+    private void resolveIntent(Intent intent) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         String action = intent.getAction();
 
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
@@ -207,61 +236,68 @@ public class MainActivity extends AppCompatActivity {
                 assert tag != null;
 
                 //dumptagdata method is called!
-                byte[] payload = dumpTagData(tag).getBytes(); //dumptagdata method is called!
+                byte[] tagPayload = dumpTagData(tag).getBytes(); //dumptagdata method is called!
+                SecretKey key = Encryption.secretKey_from_bytes(tagPayload);
+
+                //read from journeyData using key from NFC tag
+                journeyData = Capsule.peelLayer(journeyData[1], key);
+                byte[] coordinateBytes = Arrays.copyOfRange(journeyData[0], 0, 2*Double.BYTES);
+                nextShrineLocation = Byte_Array.byteArrayToCoords(coordinateBytes);
+                byte[] meditationBytes = Arrays.copyOfRange(journeyData[0], 2*Double.BYTES, 256);
+                meditation_message = Byte_Array.byteArrayToCharSequence(meditationBytes).toString();
+
                 //dumptagdata method is called!
-
-                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
-                NdefMessage msg = new NdefMessage(new NdefRecord[]{record});
-                msgs = new NdefMessage[]{msg};
+                // NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
+                //NdefMessage msg = new NdefMessage(new NdefRecord[]{record});
+                //msgs = new NdefMessage[]{msg};
             }
-
-            displayMsgs(msgs);
+            //displayMsgs(msgs);
         }
     }
-
-    private void displayMsgs(NdefMessage[] msgs) {
-        if (msgs == null || msgs.length == 0)
-            return;
-
-        StringBuilder builder = new StringBuilder();
-        List<ParsedNdefRecord> records = NdefMessageParser.parse(msgs[0]);
-        final int size = records.size();
-
-        for (int i = 0; i < size; i++) {
-            ParsedNdefRecord record = records.get(i);
-            String str = record.str();  //where str() is called and the classes are invoked to parse and create a string
-            builder.append(str).append("\n");
-        }
-
-        nfcHash = builder.toString();
-
-        nfcHash = nfcHash.trim(); //trim whitespace from gathered tag hash
-
-        //IMPORTANT FUTURE DESIGN NOTE
-        //call to web server with NfcHash as argument, get answer (riddle)
-        //I'll explain how it should work.
-        //user gets location, and sends it to server along with hash. if both values match, we get an answer from the server
-        //to implement in the future, for now we'll have placeholders stored in the app itself for comparison
-
-        TextView riddleBlock = findViewById(R.id.riddleBlock);
-
-        //Check user's location [ok since we can only access this block if both NFC and access fine location permissions have been given]
-
-        getLocation();
-        Log.i("coords", String.valueOf(deviceLocation));
-        if (isUserInCorrectLocation()) {
-            if (nfcHash.equals("secrethash")) {
-                //call to web server, get answer (riddle)
-                riddleBlock.setText("What color is an orange?"); //normally we would query the web server for this hard-coded string, but the web server is not yet implemented
-            } else {
-                riddleBlock.setText(R.string.bad_tag);
-            }
-        }
-        else {
-            riddleBlock.setText(R.string.bad_location);
-        }
-    }
-
+//    **--old message parsing code--**
+//    private void displayMsgs(NdefMessage[] msgs) {
+//        if (msgs == null || msgs.length == 0)
+//            return;
+//
+//        StringBuilder builder = new StringBuilder();
+//        List<ParsedNdefRecord> records = NdefMessageParser.parse(msgs[0]);
+//        final int size = records.size();
+//
+//        for (int i = 0; i < size; i++) {
+//            ParsedNdefRecord record = records.get(i);
+//            String str = record.str();  //where str() is called and the classes are invoked to parse and create a string
+//            builder.append(str).append("\n");
+//        }
+//
+//        nfcHash = builder.toString();
+//
+//        nfcHash = nfcHash.trim(); //trim whitespace from gathered tag hash
+//
+//        //IMPORTANT FUTURE DESIGN NOTE
+//        //call to web server with NfcHash as argument, get answer (riddle)
+//        //I'll explain how it should work.
+//        //user gets location, and sends it to server along with hash. if both values match, we get an answer from the server
+//        //to implement in the future, for now we'll have placeholders stored in the app itself for comparison
+//
+//        TextView riddleBlock = findViewById(R.id.riddleBlock);
+//
+//        //Check user's location [ok since we can only access this block if both NFC and access fine location permissions have been given]
+//
+//        getLocation();
+//        Log.i("coords", String.valueOf(deviceLocation));
+//        if (isUserInCorrectLocation()) {
+//            if (nfcHash.equals("secrethash")) {
+//                //call to web server, get answer (riddle)
+//                riddleBlock.setText("What color is an orange?"); //normally we would query the web server for this hard-coded string, but the web server is not yet implemented
+//            } else {
+//                riddleBlock.setText(R.string.bad_tag);
+//            }
+//        }
+//        else {
+//            riddleBlock.setText(R.string.bad_location);
+//        }
+//    }
+//
     //gets raw data from the NFC tag
     //@param tag the tag we're scanning
     //@return the raw string data from the tag
@@ -507,11 +543,13 @@ public class MainActivity extends AppCompatActivity {
         //
         //temporary hard-coded coordinates, will replace with server query later
         Location tagLocation = new Location("");
-        tagLocation.setLatitude(44.460050);
-        tagLocation.setLongitude(-73.157703);
+        //tagLocation.setLatitude(44.460050);
+        //tagLocation.setLongitude(-73.157703);
         //temporary hard-coded coordinates, will replace with server query later
         //
 
+        tagLocation.setLongitude(nextShrineLocation[0]);
+        tagLocation.setLatitude(nextShrineLocation[1]);
         float distanceBetweenDeviceAndTag = deviceLocation.distanceTo(tagLocation);
 
         return distanceBetweenDeviceAndTag < 20;

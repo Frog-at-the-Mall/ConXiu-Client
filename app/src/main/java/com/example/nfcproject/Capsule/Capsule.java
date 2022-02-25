@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.ShortBufferException;
 
-public abstract class Capsule {
+public class Capsule {
 
 	/** This method is used to ease the process of padding a byte segment to 256 bytes
 	 * @param bytes: the segment in need of padding. Must be <= 256 bytes.
@@ -31,7 +31,7 @@ public abstract class Capsule {
 	 * @param key: the AES encryption key for this layer
 	 * @return an encrypted byte array containing the new data, and the old data.
 	 */
-	public static byte[] encapsulate (byte[] outerCapsule, byte[] innerCapsule, SecretKey key) throws Exception {
+	public static byte[] addLayer (byte[] outerCapsule, byte[] innerCapsule, SecretKey key) throws Exception {
 		if (innerCapsule.length % 256 != 0) {
 			throw new ShortBufferException();
 		}
@@ -46,10 +46,11 @@ public abstract class Capsule {
 	 * @param key: the AES encryption key associated with the outermost layer
 	 * @return an array consisting of two byte arrays.
 	 * The first of which is plaintext data (coordinates and message),
-	 * the rest of which is another capsule waiting for its key.
+	{}* the rest of which is another capsule waiting for its key.
 	 */
-	public static byte[][] decapsulate (byte[] capsule, SecretKey key) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+	public static byte[][] peelLayer (byte[] capsule, SecretKey key) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
 		byte[] deciphered = encryptedByteArray_to_plainTextByteArray(capsule, key);
 		return Byte_Array.decatenate(deciphered);
 	}
+
 }

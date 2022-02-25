@@ -11,6 +11,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public abstract class Encryption {
     /**
@@ -29,6 +30,15 @@ public abstract class Encryption {
             e.printStackTrace();
         }
         return key;
+    }
+
+    /**
+     * @param bytes bytes to be considered as an AES key
+     * @return the key
+     */
+    public static SecretKey secretKey_from_bytes(byte[] bytes){
+        //see https://docs.oracle.com/javase/7/docs/api/javax/crypto/spec/SecretKeySpec.html
+        return new SecretKeySpec(bytes, 0, bytes.length, "AES");
     }
 
     /**
