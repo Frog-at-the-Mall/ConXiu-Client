@@ -15,6 +15,8 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
+import android.nfc.tech.NfcA;
+import android.nfc.tech.TagTechnology;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
@@ -35,6 +37,7 @@ import com.example.nfcproject.Capsule.Capsule;
 import com.example.nfcproject.Capsule.Encryption;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -183,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -254,6 +258,22 @@ public class MainActivity extends AppCompatActivity {
             //displayMsgs(msgs);
         }
     }
+    //write tag. not confirmed working, but at least it isn't throwing errors.
+    //based on code from https://developer.android.com/guide/topics/connectivity/nfc/advanced-nfc
+    public void writeTag(Tag tag, byte[] capsule) throws IOException {
+    	NfcA tag1 = NfcA.get(tag);
+    	try {
+    	    tag1.connect();
+            tag1.transceive(capsule);
+            tag1.close();
+    	} catch (IOException e) {
+            e.printStackTrace();
+        }
+    	finally {
+    	    tag1.close();
+        }
+    }
+
 //    **--old message parsing code--**
 //    private void displayMsgs(NdefMessage[] msgs) {
 //        if (msgs == null || msgs.length == 0)
