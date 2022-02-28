@@ -41,8 +41,6 @@ public class ShrineSpecificsFragment extends Fragment {
         //send volley request for shrine data (lat long).
         // will be using erics capsule to decrypt
         //start guide
-        Guide guide = new Guide();
-        guide.guidePrepare();
 
 
 

@@ -18,6 +18,7 @@ import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -67,8 +68,8 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         //guide prep
 
 
-        //mp = MediaPlayer.create(this,R.raw.audio)
-        //mp.start();
+        mp = MediaPlayer.create(this,R.raw.conxiuguide);
+        mp.start();
 
     }
 
@@ -238,7 +239,9 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     //GUIDE STATESSTATESSTATESSTATESSTATESSTATESSTATES///
     //preparing state i.e. gathering mediafiles
     public void guidePrepare(){
-        mp = new MediaPlayer();
+
+        mp = MediaPlayer.create(this, R.raw.conxiuguide);
+        mp.start();
 
         mp.getMetrics();
 
