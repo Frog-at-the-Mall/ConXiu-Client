@@ -46,7 +46,7 @@ public class LoginActivity extends Activity {
     //***   Database Utils  ***//
 
     // DB Login URL
-    public static final String URL = "http://10.0.2.2:3000/login";
+    public static final String URL = "http://ec2-18-190-157-121.us-east-2.compute.amazonaws.com:3000/login";
 
 
     //***   Volley Utils    ***//
