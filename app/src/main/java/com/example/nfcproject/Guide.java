@@ -54,6 +54,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     Location myLocation =  getDestination();
     Location myDestination;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,8 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         //guide prep
 
 
-        guidePrepare();
+        //mp = MediaPlayer.create(this,R.raw.audio)
+        //mp.start();
 
     }
 
@@ -75,6 +77,24 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // to stop the listener and save battery
+        mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (checkPermissions()) {
+            getLastLocation();
+        }
+
+        // code for system's orientation sensor registered listeners
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+                SensorManager.SENSOR_DELAY_GAME);
+        }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -99,24 +119,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // to stop the listener and save battery
-        mSensorManager.unregisterListener(this);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (checkPermissions()) {
-            getLastLocation();
-        }
-
-        // code for system's orientation sensor registered listeners
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-                SensorManager.SENSOR_DELAY_GAME);
-    }
 
     private void getLastLocation() {
         // check if permissions are given
@@ -183,6 +186,10 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
+            mGeomagneticField = new GeomagneticField((float)mLastLocation.getLatitude(),(float)mLastLocation.getLongitude(),(float)mLastLocation.getAltitude(), System.currentTimeMillis());
+
+
+            // relativeBearingTextView.setText(mLastLocation.bearingTo(destination) + 360  + "");
 
         }
     };
@@ -232,50 +239,56 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     //preparing state i.e. gathering mediafiles
     public void guidePrepare(){
         mp = new MediaPlayer();
-        try {
-            mp.prepare();
-            mp.getMetrics();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mp.getMetrics();
+
     }
 
 
     //guiding state from which all things will probably grow.
     public void guideGuiding (SensorEvent event, Location myLocation, Location myDestination){
 
+        //heading
         float degree = Math.round(event.values[0]);
-        float leftVol = degree/1000;
-        float rightVol= degree /1000;
+        //true heading
+        float trueDegree = Math.round(computeTrueNorth(degree));
+        //relative bearing
+        float relativeBearing = myLocation.bearingTo(myDestination)+ 360 - trueDegree;
+        getLastLocation();
+
+
+
+
+        float leftVol = trueDegree/1000;
+        float rightVol= trueDegree /1000;
 
         ///still has bugs facing forward
         //facing forward
-        if(degree > 315 && degree < 45){
+        if(trueDegree > 315 && trueDegree < 45){
             leftVol = 1;
             rightVol = 1;
         }
         //facing left
-        if(degree < 315 && degree > 225){
+        if(trueDegree < 315 && trueDegree > 225){
             leftVol = 0;
             rightVol = 1;
         }
         //facing backwards
-        if(degree < 225 && degree > 135){
+        if(trueDegree < 225 &&trueDegree> 135){
             leftVol = 0;
             rightVol = 0;
         }
         //facing right
-        if(degree < 135 && degree > 45){
+        if(trueDegree < 135 && trueDegree > 45){
             leftVol = 1;
             rightVol =0;
         }
 
         mp.setVolume(leftVol,rightVol);
         Log.d(TAG, "onSensorChanged: volume");
+        Log.d(TAG, "true heading :" + trueDegree);
+        Log.d(TAG,"relativeBearing : " + relativeBearing);
 
-        ///use heading and bearing to find path
-        float bearing = myLocation.bearingTo(myDestination);
 
 
     }
