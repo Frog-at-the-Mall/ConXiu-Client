@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+
 public class ShrineSpecificsFragment extends Fragment {
 
     public ShrineSpecificsFragment() {
@@ -36,6 +37,12 @@ public class ShrineSpecificsFragment extends Fragment {
                 //jmf.setLocalState("example state");         //just to carry over state as needed
             }
         });
+
+        //send volley request for shrine data (lat long).
+        // will be using erics capsule to decrypt
+        //start guide
+
+
 
         return ShrineSpecifics;
     }
