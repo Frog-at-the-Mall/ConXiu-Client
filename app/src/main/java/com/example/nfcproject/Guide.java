@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -48,8 +49,9 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     private static final String TAG = "tag";
     private SensorManager mSensorManager;
     private FusedLocationProviderClient mFusedLocationClient;
+    private GeomagneticField mGeomagneticField;
     MediaPlayer mp;
-    Location myLocation;
+    Location myLocation =  getDestination();
     Location myDestination;
 
     @Override
@@ -62,6 +64,8 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         //google map
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //guide prep
+
+
         guidePrepare();
 
     }
@@ -70,7 +74,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     public Guide() {
 
     }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -223,7 +227,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     }
 
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //GUIDE STATESSTATESSTATESSTATESSTATESSTATESSTATES///
     //preparing state i.e. gathering mediafiles
     public void guidePrepare(){
@@ -285,6 +289,31 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     ///state in which guide is on the boundary between to proximity zones.
     public void guideBoundary(){
 
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Use the magnetic field to compute true (geographic) north from the specified heading
+     * relative to magnetic north.
+     *
+     * @param heading the heading (in degrees) relative to magnetic north
+     * @return the heading (in degrees) relative to true north
+     */
+    private float computeTrueNorth(float heading) {
+        if (mGeomagneticField != null) {
+            return heading + mGeomagneticField.getDeclination();
+        } else {
+            return heading;
+        }
+    }
+
+    ////helper function subject to change once we can receive destination info
+    private Location getDestination(){
+        Location destination = new Location("");
+        //west of me => 44.484869171461725, -73.23584437166608  expected 1770m, read 1761
+        //east of me => 44.487011, -73.130027 expected 6.95 , read 6662
+        destination.setLatitude(44.487011);
+        destination.setLongitude(-73.130027);
+        return destination;
     }
 
 
