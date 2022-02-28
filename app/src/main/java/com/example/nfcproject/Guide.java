@@ -28,6 +28,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -55,6 +60,12 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     Location myLocation =  getDestination();
     Location myDestination;
 
+    //implementing volley
+    interface Listener{
+        void response(String string);
+    }
+    RequestQueue mQueue;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +81,18 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
         mp = MediaPlayer.create(this,R.raw.conxiuguide);
         mp.start();
+
+        //secret is the command
+        addRequest(secret, new Listener() {
+            @Override
+            public void response(String response) {
+                Log.d(TAG, "retrived response");
+                Log.d(TAG, response);
+
+            }
+        });
+
+
 
     }
 
@@ -240,7 +263,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     //preparing state i.e. gathering mediafiles
     public void guidePrepare(){
 
-        mp = MediaPlayer.create(this, R.raw.conxiuguide);
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.conxiuguide);
         mp.start();
 
         mp.getMetrics();
@@ -332,6 +355,22 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         return destination;
     }
 
+    private void addRequest(String url, final Listener listener) {
+        final StringRequest stringRequest2 = new StringRequest(Request.Method.GET,url,new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response != null) {
+                    listener.response(response);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: errors at add request " + error);
+            }
+        });
 
-}
+
+
+    }
 

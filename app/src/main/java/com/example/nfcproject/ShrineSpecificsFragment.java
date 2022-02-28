@@ -43,6 +43,10 @@ public class ShrineSpecificsFragment extends Fragment {
         //start guide
 
 
+        Guide guide =  new Guide();
+        guide.guidePrepare();
+
+
 
         return ShrineSpecifics;
     }
