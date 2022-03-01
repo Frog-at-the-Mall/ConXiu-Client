@@ -26,10 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+<!--        <activity-->
+<!--            android:name=".LoginActivity">-->
+
+<!--        </activity>-->
 
 
     </application>
 
 </manifest>
 
-    <!-- CHANGE NAME OF APP ABOVE under android label-->
+    <!-- CHANGE NAME OF APP ABOVE under android label as needed-->
