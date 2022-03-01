@@ -29,14 +29,14 @@ public class InitialFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View initialFragment = inflater.inflate(R.layout.fragment_initial, container, false);
-//
-//        Button login = initialFragment.findViewById(R.id.welcome_button_login);
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getActivity(), LoginActivity.class));
-//            }
-//        });
+
+        Button login = initialFragment.findViewById(R.id.welcome_button_login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+            }
+        });
         return initialFragment;
     }
 }
