@@ -71,6 +71,7 @@ public class NodeFragment extends Fragment {
             }
         };
 
+        //this button handles the NFC read info, Eric
         Button contentNode = fragNode.findViewById(R.id.contentNode);
         contentNode.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -57,13 +57,14 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     private FusedLocationProviderClient mFusedLocationClient;
     private GeomagneticField mGeomagneticField;
     MediaPlayer mp;
-    Location myLocation =  getDestination();
+    Location myLocation = getDestination();
     Location myDestination;
 
     //implementing volley
-    interface Listener{
+    interface Listener {
         void response(String string);
     }
+
     RequestQueue mQueue;
 
 
@@ -79,19 +80,18 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         //guide prep
 
 
-        mp = MediaPlayer.create(this,R.raw.conxiuguide);
+        mp = MediaPlayer.create(this, R.raw.conxiuguide);
         mp.start();
 
-        //secret is the command
-        addRequest(secret, new Listener() {
-            @Override
-            public void response(String response) {
-                Log.d(TAG, "retrived response");
-                Log.d(TAG, response);
-
-            }
-        });
-
+//        //secret is the command
+//        addRequest(secret, new Listener()) {
+//            @Override
+//            public void response(String response) {
+//                Log.d(TAG, "retrived response");
+//                Log.d(TAG, response);
+//
+//            }
+//        });
 
 
     }
@@ -100,7 +100,8 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     public Guide() {
 
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onPause() {
         super.onPause();
@@ -118,7 +119,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         // code for system's orientation sensor registered listeners
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
                 SensorManager.SENSOR_DELAY_GAME);
-        }
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -129,11 +130,10 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
         //main state (though im not sure how healthy it is to have guide always in a "listening state" through its SensorEventListener implementation
         // probably doesn't matter)
-        guideGuiding(event, myLocation,myDestination);
+        guideGuiding(event, myLocation, myDestination);
 
         //i added this to put updates in but not sure this that's the safest way.
         getLastLocation();
-
 
 
     }
@@ -142,7 +142,6 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
 
 
     private void getLastLocation() {
@@ -210,7 +209,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            mGeomagneticField = new GeomagneticField((float)mLastLocation.getLatitude(),(float)mLastLocation.getLongitude(),(float)mLastLocation.getAltitude(), System.currentTimeMillis());
+            mGeomagneticField = new GeomagneticField((float) mLastLocation.getLatitude(), (float) mLastLocation.getLongitude(), (float) mLastLocation.getAltitude(), System.currentTimeMillis());
 
 
             // relativeBearingTextView.setText(mLastLocation.bearingTo(destination) + 360  + "");
@@ -253,15 +252,15 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     }
 
     //useless method for testing
-    public int getPermID(){
+    public int getPermID() {
         return PERMISSION_ID;
     }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //GUIDE STATESSTATESSTATESSTATESSTATESSTATESSTATES///
     //preparing state i.e. gathering mediafiles
-    public void guidePrepare(){
+    public void guidePrepare() {
 
         mp = MediaPlayer.create(getApplicationContext(), R.raw.conxiuguide);
         mp.start();
@@ -272,64 +271,63 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
 
     //guiding state from which all things will probably grow.
-    public void guideGuiding (SensorEvent event, Location myLocation, Location myDestination){
+    public void guideGuiding(SensorEvent event, Location myLocation, Location myDestination) {
 
         //heading
         float degree = Math.round(event.values[0]);
         //true heading
         float trueDegree = Math.round(computeTrueNorth(degree));
         //relative bearing
-        float relativeBearing = myLocation.bearingTo(myDestination)+ 360 - trueDegree;
+        float relativeBearing = myLocation.bearingTo(myDestination) + 360 - trueDegree;
         getLastLocation();
 
 
-
-
-        float leftVol = trueDegree/1000;
-        float rightVol= trueDegree /1000;
+        float leftVol = trueDegree / 1000;
+        float rightVol = trueDegree / 1000;
 
         ///still has bugs facing forward
         //facing forward
-        if(trueDegree > 315 && trueDegree < 45){
+        if (trueDegree > 315 && trueDegree < 45) {
             leftVol = 1;
             rightVol = 1;
         }
         //facing left
-        if(trueDegree < 315 && trueDegree > 225){
+        if (trueDegree < 315 && trueDegree > 225) {
             leftVol = 0;
             rightVol = 1;
         }
         //facing backwards
-        if(trueDegree < 225 &&trueDegree> 135){
+        if (trueDegree < 225 && trueDegree > 135) {
             leftVol = 0;
             rightVol = 0;
         }
         //facing right
-        if(trueDegree < 135 && trueDegree > 45){
+        if (trueDegree < 135 && trueDegree > 45) {
             leftVol = 1;
-            rightVol =0;
+            rightVol = 0;
         }
 
-        mp.setVolume(leftVol,rightVol);
+        mp.setVolume(leftVol, rightVol);
         Log.d(TAG, "onSensorChanged: volume");
         Log.d(TAG, "true heading :" + trueDegree);
-        Log.d(TAG,"relativeBearing : " + relativeBearing);
-
+        Log.d(TAG, "relativeBearing : " + relativeBearing);
 
 
     }
 
     //state in which guide is completing its task
-    public void guideFinalizing(){
+    public void guideFinalizing() {
 
         mp.release();
 
     }
+
     ///state in which guide is on the boundary between to proximity zones.
-    public void guideBoundary(){
+    public void guideBoundary() {
 
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Use the magnetic field to compute true (geographic) north from the specified heading
      * relative to magnetic north.
@@ -346,7 +344,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     }
 
     ////helper function subject to change once we can receive destination info
-    private Location getDestination(){
+    private Location getDestination() {
         Location destination = new Location("");
         //west of me => 44.484869171461725, -73.23584437166608  expected 1770m, read 1761
         //east of me => 44.487011, -73.130027 expected 6.95 , read 6662
@@ -356,7 +354,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     }
 
     private void addRequest(String url, final Listener listener) {
-        final StringRequest stringRequest2 = new StringRequest(Request.Method.GET,url,new Response.Listener<String>() {
+        final StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response != null) {
@@ -371,6 +369,6 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         });
 
 
-
     }
+}
 
