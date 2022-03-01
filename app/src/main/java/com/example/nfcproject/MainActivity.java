@@ -142,14 +142,25 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-//
-//        welcome_login_btn = findViewById(R.id.welcome_button_login);
-//        welcome_login_btn.setOnClickListener(v -> startLogin());
 
-        InitialFragment iff = InitialFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.replaceFrame, iff, "InitialFragment")
-                .commit();
+
+        //if logged in, we skip ahead to seeker saga menu. WARNING: if more getExtra usage is done rewrite this block
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String username = bundle.getString("username"); //should be null on first launch, no login
+            if(username != null) {
+                SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
+                        .commit();
+            }
+        }
+        else {
+            InitialFragment iff = InitialFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.replaceFrame, iff, "InitialFragment")
+                    .commit();
+        }
 
     } //End OnCreate
 
