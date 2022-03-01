@@ -170,6 +170,7 @@ public class LoginActivity extends Activity {
                         e.printStackTrace();
                     }
                     Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                    //******important placement**********///
                     openMainPage(username_str);
                 } else {
                     Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();

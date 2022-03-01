@@ -16,7 +16,11 @@
         android:label="ConXiu"
 
         android:roundIcon="@mipmap/logo_round"
-        android:theme="@style/SplashTheme">
+        android:theme="@style/SplashTheme"
+        android:usesCleartextTraffic="true"
+
+    >
+
 
         <activity
 

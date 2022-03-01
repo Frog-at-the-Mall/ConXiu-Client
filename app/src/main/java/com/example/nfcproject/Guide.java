@@ -82,6 +82,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
         mp = MediaPlayer.create(this, R.raw.conxiuguide);
         mp.start();
+        String secret = "http://ec2-18-190-157-121.us-east-2.compute.amazonaws.com:3000/login";
 
 //        //secret is the command
 //        addRequest(secret, new Listener()) {
@@ -314,6 +315,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
 
     }
+
 
     //state in which guide is completing its task
     public void guideFinalizing() {

@@ -80,10 +80,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide(); //hide the title bar
 
-        //guide instantiation and testing
-        Guide guide = new Guide();
-        guide.getPermID();
-        Log.d(TAG, "GUIDEGUIDEGUIDEGUIDE");
+
 
         //check to see if device has NFC hardware, and if it's enabled
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -579,11 +576,6 @@ public class MainActivity extends AppCompatActivity {
 
 //<<<<<<< HEAD
 //=======
-    private void startLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
 //
 //
 ////could be a server call down the road
