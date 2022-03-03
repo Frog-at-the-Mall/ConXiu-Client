@@ -215,7 +215,7 @@ public class LoginActivity extends Activity {
                     } else {
                         Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();
                     }
-                }, error -> Toast.makeText(LoginActivity.this, (CharSequence) error, Toast.LENGTH_SHORT).show());
+                }, error -> Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show());
                 mQueue.add(jsonRequest);
             } else {
                 Toast.makeText(LoginActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
