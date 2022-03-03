@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button welcome_login_btn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -146,14 +147,15 @@ public class MainActivity extends AppCompatActivity {
 
         //if logged in, we skip ahead to seeker saga menu. WARNING: if more getExtra usage is done rewrite this block
         Bundle bundle = getIntent().getExtras();
+        String username = null;
         if (bundle != null) {
-            String username = bundle.getString("username"); //should be null on first launch, no login
-            if(username != null) {
-                SagaMenuFragment smf = SagaMenuFragment.newInstance();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
-                        .commit();
-            }
+            username = bundle.getString("username"); //should be null on first launch, no login
+        }
+        if(username != null) {
+            SagaMenuFragment smf = SagaMenuFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
+                    .commit();
         }
         else {
             InitialFragment iff = InitialFragment.newInstance();
