@@ -1,11 +1,14 @@
 package com.example.nfcproject;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -41,10 +44,10 @@ public class ShrineSpecificsFragment extends Fragment {
         //send volley request for shrine data (lat long).
         // will be using erics capsule to decrypt
         //start guide
-
+        Toast.makeText(getActivity() , "BURNT TOAST", Toast.LENGTH_SHORT).show();
 
         Guide guide =  new Guide();
-        guide.guidePrepare();
+
 
 
 

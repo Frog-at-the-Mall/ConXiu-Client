@@ -1,5 +1,6 @@
 package com.example.nfcproject;
 
+import static android.app.PendingIntent.getActivity;
 import static android.content.ContentValues.TAG;
 
 import android.Manifest;
@@ -60,17 +61,12 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     Location myLocation = getDestination();
     Location myDestination;
 
-    //implementing volley
-    interface Listener {
-        void response(String string);
-    }
-
-    RequestQueue mQueue;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Toast.makeText(this , "BURNT TOAST", Toast.LENGTH_SHORT).show();
 
 
         //sensor init
@@ -80,27 +76,11 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         //guide prep
 
 
-        mp = MediaPlayer.create(this, R.raw.conxiuguide);
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.conxiuguide);
         mp.start();
-        String secret = "http://ec2-18-190-157-121.us-east-2.compute.amazonaws.com:3000/login";
-
-//        //secret is the command
-//        addRequest(secret, new Listener()) {
-//            @Override
-//            public void response(String response) {
-//                Log.d(TAG, "retrived response");
-//                Log.d(TAG, response);
-//
-//            }
-//        });
-
-
     }
 
-    //add constructors for parameters like ==> Guide guide(getDestination(), getOtherStuff());
-    public Guide() {
 
-    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
@@ -126,15 +106,45 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
 
         Log.d(TAG, "onSensorChanged: confirmed " + event);
-        //4 state radial audio tracker
-        SensorEvent eventX = event;
 
-        //main state (though im not sure how healthy it is to have guide always in a "listening state" through its SensorEventListener implementation
-        // probably doesn't matter)
-        guideGuiding(event, myLocation, myDestination);
-
-        //i added this to put updates in but not sure this that's the safest way.
+        //heading
+        float degree = Math.round(event.values[0]);
+        //true heading
+        float trueDegree = Math.round(computeTrueNorth(degree));
+        //relative bearing
+        float relativeBearing = myLocation.bearingTo(myDestination) + 360 - trueDegree;
         getLastLocation();
+
+
+        float leftVol = trueDegree / 1000;
+        float rightVol = trueDegree / 1000;
+
+        ///still has bugs facing forward
+        //facing forward
+        if (trueDegree > 315 && trueDegree < 45) {
+            leftVol = 1;
+            rightVol = 1;
+        }
+        //facing left
+        if (trueDegree < 315 && trueDegree > 225) {
+            leftVol = 0;
+            rightVol = 1;
+        }
+        //facing backwards
+        if (trueDegree < 225 && trueDegree > 135) {
+            leftVol = 0;
+            rightVol = 0;
+        }
+        //facing right
+        if (trueDegree < 135 && trueDegree > 45) {
+            leftVol = 1;
+            rightVol = 0;
+        }
+
+        mp.setVolume(leftVol, rightVol);
+        Log.d(TAG, "onSensorChanged: volume");
+        Log.d(TAG, "true heading :" + trueDegree);
+        Log.d(TAG, "relativeBearing : " + relativeBearing);
 
 
     }
@@ -252,82 +262,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         }
     }
 
-    //useless method for testing
-    public int getPermID() {
-        return PERMISSION_ID;
-    }
 
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //GUIDE STATESSTATESSTATESSTATESSTATESSTATESSTATES///
-    //preparing state i.e. gathering mediafiles
-    public void guidePrepare() {
-
-        mp = MediaPlayer.create(getApplicationContext(), R.raw.conxiuguide);
-        mp.start();
-
-        mp.getMetrics();
-
-    }
-
-
-    //guiding state from which all things will probably grow.
-    public void guideGuiding(SensorEvent event, Location myLocation, Location myDestination) {
-
-        //heading
-        float degree = Math.round(event.values[0]);
-        //true heading
-        float trueDegree = Math.round(computeTrueNorth(degree));
-        //relative bearing
-        float relativeBearing = myLocation.bearingTo(myDestination) + 360 - trueDegree;
-        getLastLocation();
-
-
-        float leftVol = trueDegree / 1000;
-        float rightVol = trueDegree / 1000;
-
-        ///still has bugs facing forward
-        //facing forward
-        if (trueDegree > 315 && trueDegree < 45) {
-            leftVol = 1;
-            rightVol = 1;
-        }
-        //facing left
-        if (trueDegree < 315 && trueDegree > 225) {
-            leftVol = 0;
-            rightVol = 1;
-        }
-        //facing backwards
-        if (trueDegree < 225 && trueDegree > 135) {
-            leftVol = 0;
-            rightVol = 0;
-        }
-        //facing right
-        if (trueDegree < 135 && trueDegree > 45) {
-            leftVol = 1;
-            rightVol = 0;
-        }
-
-        mp.setVolume(leftVol, rightVol);
-        Log.d(TAG, "onSensorChanged: volume");
-        Log.d(TAG, "true heading :" + trueDegree);
-        Log.d(TAG, "relativeBearing : " + relativeBearing);
-
-
-    }
-
-
-    //state in which guide is completing its task
-    public void guideFinalizing() {
-
-        mp.release();
-
-    }
-
-    ///state in which guide is on the boundary between to proximity zones.
-    public void guideBoundary() {
-
-    }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -355,22 +290,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
         return destination;
     }
 
-    private void addRequest(String url, final Listener listener) {
-        final StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response != null) {
-                    listener.response(response);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: errors at add request " + error);
-            }
-        });
-
-
-    }
 }
+
+
 
