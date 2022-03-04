@@ -78,10 +78,8 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue mQueue;
 
     //***   Shared Prefs    ***//
-
     public static final String SHARED_PREF = "sharedPref";
     public static final String JWT = "jwt";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
