@@ -166,10 +166,10 @@ public class LoginActivity extends Activity {
                     SharedPreferences.Editor editor = prefs.edit();
                     try {
                         editor.putString(JWT, (String) response.get("token"));
+                        editor.commit();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                     //******important placement**********///
                     openMainPage(username_str);
                 } else {
