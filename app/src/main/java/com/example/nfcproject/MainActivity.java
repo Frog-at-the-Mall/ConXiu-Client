@@ -2,9 +2,7 @@ package com.example.nfcproject;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,41 +10,43 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
-import android.nfc.tech.TagTechnology;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.nfcproject.Capsule.Byte_Array;
 import com.example.nfcproject.Capsule.Capsule;
 import com.example.nfcproject.Capsule.Encryption;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -71,6 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Button welcome_login_btn;
 
+    public static final String URL = "http://ec2-18-190-157-121.us-east-2.compute.amazonaws.com:3000/";
+
+
+    // Volley Request queue
+    RequestQueue mQueue;
+
+    //***   Shared Prefs    ***//
+    public static final String SHARED_PREF = "sharedPref";
+    public static final String JWT = "jwt";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -80,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide(); //hide the title bar
 
-
+        mQueue = Volley.newRequestQueue(this);
 
         //check to see if device has NFC hardware, and if it's enabled
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -146,16 +156,20 @@ public class MainActivity extends AppCompatActivity {
 
         //if logged in, we skip ahead to seeker saga menu. WARNING: if more getExtra usage is done rewrite this block
         Bundle bundle = getIntent().getExtras();
+        String username = null;
         if (bundle != null) {
-            String username = bundle.getString("username"); //should be null on first launch, no login
-            if(username != null) {
-                SagaMenuFragment smf = SagaMenuFragment.newInstance();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
-                        .commit();
-            }
+            username = bundle.getString("username"); //should be null on first launch, no login
         }
-        else {
+
+        // Gets the JWT from shared prefs, if none it will be set to ""
+        SharedPreferences prefs = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        String jwt = prefs.getString(JWT, "");
+
+        // If JWT is not "" check if the token is valid.
+        // If not valid open initalfrag where user can login.
+        if(jwt != "") {
+            tokenCheck(jwt);
+        } else {
             InitialFragment iff = InitialFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.replaceFrame, iff, "InitialFragment")
@@ -282,6 +296,30 @@ public class MainActivity extends AppCompatActivity {
     	finally {
     	    tag1.close();
         }
+    }
+
+    // Will send a request to check if the passed JWT is valid. If it is Sagamenu will be opened.
+    public void tokenCheck(String jwt) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("token", jwt);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"login/userVerify",json, response -> {
+            try {
+                if((boolean) response.get("success")) {
+                    SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
+                            .commit();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show());
+
+        mQueue.add(jsonRequest);
     }
 
 //    **--old message parsing code--**

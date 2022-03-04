@@ -59,17 +59,18 @@
 
     <!--Login Screen-->
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/sig_login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editT_password"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:backgroundTint="#30ffffff"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorPrimary"
         android:text="LOGIN" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/sig_registerpage_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +80,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#30ffffff"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorPrimary"
         android:text="Register" />
 
 
@@ -95,7 +97,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="#30ffffff"
-        android:hint="re-password"
+        android:hint="re-enter password"
         android:imeOptions="actionDone"
         android:padding="20dp"
         android:password="true"
@@ -123,7 +125,7 @@
         android:textColorHint="#8E8E8E"
         android:visibility="invisible" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/reg_register_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,18 +135,20 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#30ffffff"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorPrimary"
         android:text="Register"
         android:visibility="invisible" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/reg_loginpage_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/reg_register_btn"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:backgroundTint="#30ffffff"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorPrimary"
         android:text="Back to login"
         android:visibility="invisible" />
 
