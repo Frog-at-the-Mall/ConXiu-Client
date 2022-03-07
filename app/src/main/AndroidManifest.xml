@@ -24,7 +24,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/TestMaterialTheme"
+            android:theme="@style/SplashTheme"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
