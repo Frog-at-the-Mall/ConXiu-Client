@@ -39,7 +39,7 @@
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/TestMaterialTheme">
+            android:theme="@style/SplashTheme">
         </activity>
 
 
