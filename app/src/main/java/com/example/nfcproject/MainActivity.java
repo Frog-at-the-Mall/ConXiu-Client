@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     //***   Shared Prefs    ***//
     public static final String SHARED_PREF = "sharedPref";
     public static final String JWT = "jwt";
+    public static final String USERNAME = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,17 +154,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-        //if logged in, we skip ahead to seeker saga menu. WARNING: if more getExtra usage is done rewrite this block
-        Bundle bundle = getIntent().getExtras();
-        String username = null;
-        if (bundle != null) {
-            username = bundle.getString("username"); //should be null on first launch, no login
-        }
-
         // Gets the JWT from shared prefs, if none it will be set to ""
         SharedPreferences prefs = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
         String jwt = prefs.getString(JWT, "");
+
 
         // If JWT is not "" check if the token is valid.
         // If not valid open initalfrag where user can login.

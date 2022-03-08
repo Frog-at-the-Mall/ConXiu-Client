@@ -60,6 +60,7 @@ public class LoginActivity extends Activity {
 
     public static final String SHARED_PREF = "sharedPref";
     public static final String JWT = "jwt";
+    public static final String USERNAME = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,10 +133,9 @@ public class LoginActivity extends Activity {
         editT_email.setText("");
     }
 
-    public void openMainPage(String username) {
+    public void openMainPage() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("username", username);
         startActivity(intent);
     }
 
@@ -167,12 +167,13 @@ public class LoginActivity extends Activity {
                     SharedPreferences.Editor editor = prefs.edit();
                     try {
                         editor.putString(JWT, (String) response.get("token"));
+                        editor.putString(USERNAME, (String) username_str);
                         editor.commit();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     //******important placement**********///
-                    openMainPage(username_str);
+                    openMainPage();
                 } else {
                     Toast.makeText(LoginActivity.this, returnMsg, Toast.LENGTH_SHORT).show();
                 }
