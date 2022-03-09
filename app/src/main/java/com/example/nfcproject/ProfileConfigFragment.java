@@ -74,15 +74,13 @@ public class ProfileConfigFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                String newUsername = editT_Username.getText().toString().trim();
-                String newPassword = editT_newPassword.getText().toString().trim();
-                String reNewPassword = editT_rePassword.getText().toString().trim();
-                String curPassword = editT_Password.getText().toString().trim();
-
+                String newUsername = editT_Username.getText().toString();
+                String newPassword = editT_newPassword.getText().toString();
+                String reNewPassword = editT_rePassword.getText().toString();
+                String curPassword = editT_Password.getText().toString();
                 String jwt = prefs.getString(JWT, "");
-                String username = prefs.getString(USERNAME,"");
 
-                if(!newUsername.isEmpty() && !newPassword.isEmpty() && reNewPassword.isEmpty() && curPassword.isEmpty()) {
+                if(!newUsername.isEmpty() && !newPassword.isEmpty() && !reNewPassword.isEmpty() && !curPassword.isEmpty()) {
                     if(newPassword.equals(reNewPassword)) {
                         JSONObject json = new JSONObject();
                         try {
