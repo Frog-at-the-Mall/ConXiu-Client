@@ -41,5 +41,7 @@
     <string name="curator_shrine_specifics_next_location">next location</string>
     <string name="curator_shrine_specifics_nature">nature keyword</string>
     <string name="curator_shrine_specifics_audio_path">audio path on disk</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

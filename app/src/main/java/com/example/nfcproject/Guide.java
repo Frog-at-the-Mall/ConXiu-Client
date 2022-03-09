@@ -61,6 +61,8 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
     Location myLocation = getDestination();
     Location myDestination;
 
+    public Guide(){}
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -264,6 +266,7 @@ public class Guide extends AppCompatActivity implements SensorEventListener {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     /**
      * Use the magnetic field to compute true (geographic) north from the specified heading

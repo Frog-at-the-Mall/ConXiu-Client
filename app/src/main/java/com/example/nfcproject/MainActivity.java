@@ -63,11 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
     PendingIntent pendingIntent;
     NfcAdapter nfcAdapter;
+    //maybe change to public so shrineSpecificFrag can use it.
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private Location deviceLocation;
-
-    private final String TAG = "GUIDE TAG";
+     Location deviceLocation;
 
     private Button welcome_login_btn;
 
@@ -169,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.replaceFrame, iff, "InitialFragment")
                     .commit();
         }
+
+
 
     } //End OnCreate
 
