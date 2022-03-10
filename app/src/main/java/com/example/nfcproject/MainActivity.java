@@ -314,7 +314,10 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"login/userVerify",json, response -> {
             try {
                 if((boolean) response.get("success")) {
-                    openLogin();
+                    SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
+                            .commit();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
