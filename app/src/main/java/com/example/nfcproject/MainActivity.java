@@ -28,8 +28,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nfcproject.Capsule.Byte_Array;
@@ -293,26 +295,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void openLogin(){
+        InitialFragment iff = InitialFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.replaceFrame, iff, "InitialFragment")
+                .commit();
+    }
+
     // Will send a request to check if the passed JWT is valid. If it is Sagamenu will be opened.
     public void tokenCheck(String jwt) {
         JSONObject json = new JSONObject();
         try {
             json.put("token", jwt);
         } catch (JSONException e) {
+
             e.printStackTrace();
         }
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"login/userVerify",json, response -> {
             try {
                 if((boolean) response.get("success")) {
-                    SagaMenuFragment smf = SagaMenuFragment.newInstance();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
-                            .commit();
+                    openLogin();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show());
+        }, error -> openLogin());
 
         mQueue.add(jsonRequest);
     }
