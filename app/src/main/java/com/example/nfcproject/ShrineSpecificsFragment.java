@@ -26,11 +26,11 @@ import com.google.android.gms.location.LocationServices;
 
 public class ShrineSpecificsFragment extends Fragment implements SensorEventListener {
 
-    //magField
+
     GeomagneticField mGeomagneticField;
     Location myLocation = new Location("") ;
-
     Location myDestination = getDestination();
+    MediaPlayer mp;
 
 
     public ShrineSpecificsFragment() {
@@ -39,9 +39,6 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
     static ShrineSpecificsFragment newInstance() {
         return new ShrineSpecificsFragment();
     }
-
-
-
 
 
     @Override
@@ -69,6 +66,10 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         mSensorManager.registerListener(this,mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME);
         FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
+        mp = MediaPlayer.create(getContext(), R.raw.conxiuguide);
+        mp.start();
+        mp.setLooping(true);
+
 
         return ShrineSpecifics;
     }
@@ -90,21 +91,25 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         if (trueHeading > 315 && trueHeading < 45) {
             leftVol = 1;
             rightVol = 1;
+            mp.setVolume(leftVol,rightVol);
         }
         //facing left
         if (trueHeading < 315 && trueHeading > 225) {
             leftVol = 0;
             rightVol = 1;
+            mp.setVolume(leftVol,rightVol);
         }
         //facing backwards
         if (trueHeading < 225 && trueHeading > 135) {
             leftVol = 0;
             rightVol = 0;
+            mp.setVolume(leftVol,rightVol);
         }
         //facing right
         if (trueHeading < 135 && trueHeading > 45) {
             leftVol = 1;
             rightVol = 0;
+            mp.setVolume(leftVol,rightVol);
         }
 
         Log.d("Left Volume : " , String.valueOf(leftVol));
