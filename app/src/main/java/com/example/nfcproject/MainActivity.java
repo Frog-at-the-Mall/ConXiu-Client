@@ -159,19 +159,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
         String jwt = prefs.getString(JWT, "");
 
-
         // If JWT is not "" check if the token is valid.
         // If not valid open initalfrag where user can login.
         if(jwt != "") {
             tokenCheck(jwt);
         } else {
-            InitialFragment iff = InitialFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.replaceFrame, iff, "InitialFragment")
-                    .commit();
+            openInitialFrag();
         }
-
-
 
     } //End OnCreate
 
@@ -295,10 +289,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void openLogin(){
+    public void openInitialFrag(){
         InitialFragment iff = InitialFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.replaceFrame, iff, "InitialFragment")
+                .commit();
+    }
+
+    public void openSagaMenuFrag(){
+        SagaMenuFragment smf = SagaMenuFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
                 .commit();
     }
 
@@ -314,15 +315,12 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"login/userVerify",json, response -> {
             try {
                 if((boolean) response.get("success")) {
-                    SagaMenuFragment smf = SagaMenuFragment.newInstance();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
-                            .commit();
+                    openSagaMenuFrag();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> openLogin());
+        }, error -> openInitialFrag());
 
         mQueue.add(jsonRequest);
     }

@@ -1,5 +1,9 @@
 package com.example.nfcproject.Capsule;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
@@ -83,5 +87,14 @@ public abstract class Byte_Array {
 	 */
 	public static double byteArrayToDouble(byte[] someBytes){
 		return ByteBuffer.wrap(someBytes).getDouble();
+	}
+
+	/**
+	 * @param someBytes: bytes data
+	 * @return A byte buffer containing the byte data
+	 */
+	public static Buffer byteArrrayToBuffer(byte [] someBytes) {
+		Buffer buf = ByteBuffer.wrap(someBytes);
+		return buf;
 	}
 }
