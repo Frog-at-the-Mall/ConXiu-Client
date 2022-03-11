@@ -12,6 +12,7 @@ import android.location.Location;
 import android.media.MediaPlayer;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
     Location myLocation = new Location("") ;
     Location myDestination = getDestination();
     MediaPlayer mp;
+    MediaPlayer mp2;
 
 
     public ShrineSpecificsFragment() {
@@ -67,9 +69,11 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         mp = MediaPlayer.create(getContext(), R.raw.conxiuguide);
+        mp2 = MediaPlayer.create(getContext(),R.raw.conxiuguidedrmz);
         mp.start();
+        mp2.start();
         mp.setLooping(true);
-
+        mp2.setLooping(true);
 
         return ShrineSpecifics;
     }
