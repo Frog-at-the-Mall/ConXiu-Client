@@ -22,17 +22,6 @@ public abstract class Byte_Array {
 	}
 
 	/**
-	 * @param body: the array to be split into sections.
-	 * @return an array of byte arrays. The first element will be the first 256 bytes of the array,
-	 * with the remainder as the second element.
-	 */
-	static byte [][] decatenate(byte[] body) {
-		byte[] tail = new byte[body.length - 256];
-		byte[] head = new byte[256];
-		return new byte[][]{head, tail};
-	}
-
-	/**
 	 * @param someBytes: characters encoded as bytes
 	 * @return the characters, decoded.
 	 */
@@ -94,7 +83,15 @@ public abstract class Byte_Array {
 	 * @return A byte buffer containing the byte data
 	 */
 	public static Buffer byteArrrayToBuffer(byte [] someBytes) {
-		Buffer buf = ByteBuffer.wrap(someBytes);
-		return buf;
+		return ByteBuffer.wrap(someBytes);
+	}
+
+	/** This method is used to ease the process of padding a byte segment to 255 bytes
+	 * @param bytes: the segment in need of padding. Must be <= 255 bytes.
+	 * @return a byte array 256 in length.
+	 * */
+	protected static byte[] padBytes256(byte[] bytes) throws Exception {
+		if (bytes.length > 256) throw new Exception("this block is too large!");
+		return java.util.Arrays.copyOf(bytes, 256);
 	}
 }

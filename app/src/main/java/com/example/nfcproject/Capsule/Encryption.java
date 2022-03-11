@@ -66,4 +66,5 @@ public abstract class Encryption {
         cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(new byte[cipher.getBlockSize()]));
         return cipher.doFinal(ciphertext);
     }
+
 }

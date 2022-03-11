@@ -1,56 +1,81 @@
 package com.example.nfcproject.Capsule;
 
-import static com.example.nfcproject.Capsule.Encryption.encryptedByteArray_to_plainTextByteArray;
-import static com.example.nfcproject.Capsule.Encryption.plainTextByteArray_to_encryptedByteArray;
-
+import static com.example.nfcproject.Capsule.Byte_Array.concatenate;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.ShortBufferException;
 
 public class Capsule {
 
-	/** This method is used to ease the process of padding a byte segment to 256 bytes
-	 * @param bytes: the segment in need of padding. Must be <= 256 bytes.
-	 * @return a byte array 256 in length.
-	* */
-	private static byte[] padBytes256(byte[] bytes) throws Exception {
-		if (bytes.length > 256) throw new Exception("this block is too large!");
-		return java.util.Arrays.copyOf(bytes, 256);
+	public Capsule innerCapsule(SecretKey key) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+		byte [] unencryptedInnerData = Encryption.encryptedByteArray_to_plainTextByteArray(this.encryptedInnerData, key);
+		byte [][] decat = splitFields(unencryptedInnerData);
+
+		byte[] coordsBytes = decat[0];
+		double[] coords = Byte_Array.byteArrayToCoords(coordsBytes);
+		byte[] messageBytes = decat[1];
+		String message = (String)Byte_Array.byteArrayToCharSequence(messageBytes);
+		byte[] innerInnerData = decat[2];
+		return new Capsule(coords[0], coords[1], message, key, innerInnerData);
 	}
 
-	/**
-	 * @param outerCapsule: the new data to add to the structure
-	 * @param innerCapsule: the already encapsulated data that is getting added to
-	 *                    If this is the innermost layer, this should be new byte[0].
-	 * @param key: the AES encryption key for this layer
-	 * @return an encrypted byte array containing the new data, and the old data.
-	 */
-	public static byte[] addLayer (byte[] outerCapsule, byte[] innerCapsule, SecretKey key) throws Exception {
-		if (innerCapsule.length % 256 != 0) {
-			throw new ShortBufferException();
-		}
-		outerCapsule = padBytes256(outerCapsule);
-		byte[] encapsulation = Byte_Array.concatenate(outerCapsule, innerCapsule);
-		return plainTextByteArray_to_encryptedByteArray(encapsulation, key);
+	public Capsule outerCapsule(double lat, double lon, CharSequence message, SecretKey key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+		return new Capsule(lat, lon, message, key, this.asBytes());
 	}
 
+	public double[] getCoords(){
+		return this.latLon;}
+	public CharSequence getMessage(){
+		return this.message;}
+
+
+	private double[] latLon;
+	private CharSequence message;
+	private byte[] encryptedInnerData;
+
 	/**
-	 *
-	 * @param capsule: the structure to decipher and split
-	 * @param key: the AES encryption key associated with the outermost layer
-	 * @return an array consisting of two byte arrays.
-	 * The first of which is plaintext data (coordinates and message),
-	{}* the rest of which is another capsule waiting for its key.
+	 * Represents a Capsule, which is a layer of nested, encrypted data with a plaintext head
+	 * consisting of a pair of doubles and a string
+	 * @param lat latitude
+	 * @param lon longitude
+	 * @param message the meditation
+	 * @param innerData the inner capsule, as bytes
 	 */
-	public static byte[][] peelLayer (byte[] capsule, SecretKey key) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-		byte[] deciphered = encryptedByteArray_to_plainTextByteArray(capsule, key);
-		return Byte_Array.decatenate(deciphered);
+	private Capsule(double lat, double lon, CharSequence message, SecretKey key, byte[] innerData) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+		this.setCoords(lat, lon);
+		this.setMessage(message);
+		this.setEncryptedInnerData(innerData, key);
+	}
+	private byte[] asBytes(){
+		byte[] coordBytes = Byte_Array.coordsToByteArray(this.latLon[0], this.latLon[1]);
+		byte[] messageBytes = Byte_Array.charSequenceToByteArray(this.message);
+		byte[] innerBytes = this.encryptedInnerData;
+		return mergeFields(coordBytes, messageBytes, innerBytes);
+	}
+	private void setEncryptedInnerData(byte[] unencryptedInnerData, SecretKey key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+		this.encryptedInnerData = Encryption.plainTextByteArray_to_encryptedByteArray(unencryptedInnerData, key);
+	}
+	private void setCoords(double lat, double lon){
+		this.latLon = new double[]{lat, lon};
+	}
+	private void setMessage(CharSequence message){
+		this.message = message;
+	}
+	private byte [][] splitFields(byte[] body) {
+		byte[] doublesBytes = new byte[Double.BYTES*2];
+		byte[] strBytes = new byte[256-(Double.BYTES*2)];
+		byte[] innerCapsuleBytes = new byte[body.length - 256];
+		System.arraycopy(body, 0, doublesBytes, 0,Double.BYTES*2);
+		System.arraycopy(body, Double.BYTES*2, strBytes, 0, 256-(Double.BYTES*2));
+		System.arraycopy(body, 256, innerCapsuleBytes, 0, body.length-256);
+		return new byte[][]{doublesBytes, strBytes, innerCapsuleBytes};
+	}
+	private byte[] mergeFields(byte[] coordBytes, byte[] messageBytes, byte[] innerBytes){
+		return concatenate(coordBytes, concatenate(messageBytes, innerBytes));
 	}
 
 }

@@ -258,13 +258,6 @@ public class MainActivity extends AppCompatActivity {
                 byte[] tagPayload = dumpTagData(tag).getBytes(); //dumptagdata method is called!
                 SecretKey key = Encryption.secretKey_from_bytes(tagPayload);
 
-                //read from journeyData using key from NFC tag
-                journeyData = Capsule.peelLayer(journeyData[1], key);
-                byte[] coordinateBytes = Arrays.copyOfRange(journeyData[0], 0, 2*Double.BYTES);
-                nextShrineLocation = Byte_Array.byteArrayToCoords(coordinateBytes);
-                byte[] meditationBytes = Arrays.copyOfRange(journeyData[0], 2*Double.BYTES, 256);
-                meditation_message = Byte_Array.byteArrayToCharSequence(meditationBytes).toString();
-
                 //dumptagdata method is called!
                 // NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
                 //NdefMessage msg = new NdefMessage(new NdefRecord[]{record});
