@@ -10,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.media.MediaPlayer;
+import android.media.audiofx.Visualizer;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
+import com.gauravk.audiovisualizer.visualizer.BlastVisualizer;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -48,7 +50,6 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
 
         final View ShrineSpecifics = inflater.inflate(R.layout.shrine_specifics, container, false);
-
         Button back = ShrineSpecifics.findViewById(R.id.shrine_specifics_back); //back button
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +75,9 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         mp2.start();
         mp.setLooping(true);
         mp2.setLooping(true);
+
+        BlastVisualizer mVisualizer = ShrineSpecifics.findViewById(R.id.blast);
+       // mVisualizer.setAudioSessionId(mp.getAudioSessionId());
 
         return ShrineSpecifics;
     }
