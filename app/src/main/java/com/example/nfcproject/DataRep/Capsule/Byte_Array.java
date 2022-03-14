@@ -1,7 +1,4 @@
-package com.example.nfcproject.Capsule;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.example.nfcproject.DataRep.Capsule;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;

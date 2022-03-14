@@ -17,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ public class ProfileConfigFragment extends Fragment {
         //required empty public constructor
     }
 
-    static ProfileConfigFragment newInstance() {
+    public static ProfileConfigFragment newInstance() {
         return new ProfileConfigFragment();
     }
 
@@ -60,7 +61,7 @@ public class ProfileConfigFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
                         .addToBackStack(null)

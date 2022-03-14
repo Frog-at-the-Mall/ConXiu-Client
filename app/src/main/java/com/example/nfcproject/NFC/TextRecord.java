@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.NFC;
 
 import android.nfc.NdefRecord;
 import com.google.common.base.Preconditions;

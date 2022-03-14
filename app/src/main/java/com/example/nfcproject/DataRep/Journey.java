@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.DataRep;
 
 public class Journey {
 	String currentMeditation;

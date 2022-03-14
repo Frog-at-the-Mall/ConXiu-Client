@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.Curator;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.nfcproject.R;
 
 public class CuratorShrineSpecificsMenu extends Fragment {
 

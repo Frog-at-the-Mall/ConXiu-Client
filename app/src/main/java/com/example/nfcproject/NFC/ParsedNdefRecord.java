@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.NFC;
 
 
 //exposes the str method, implemented in the classes URIRecord,

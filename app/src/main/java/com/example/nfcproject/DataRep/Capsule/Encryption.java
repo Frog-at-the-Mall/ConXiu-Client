@@ -1,4 +1,4 @@
-package com.example.nfcproject.Capsule;
+package com.example.nfcproject.DataRep.Capsule;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

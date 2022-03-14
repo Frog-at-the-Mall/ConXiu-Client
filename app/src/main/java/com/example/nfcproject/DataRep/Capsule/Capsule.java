@@ -1,6 +1,6 @@
-package com.example.nfcproject.Capsule;
+package com.example.nfcproject.DataRep.Capsule;
 
-import static com.example.nfcproject.Capsule.Byte_Array.concatenate;
+import static com.example.nfcproject.DataRep.Capsule.Byte_Array.concatenate;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

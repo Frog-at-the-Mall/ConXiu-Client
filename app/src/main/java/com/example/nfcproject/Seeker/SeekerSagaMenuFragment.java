@@ -1,9 +1,8 @@
-package com.example.nfcproject;
+package com.example.nfcproject.Seeker;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,21 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import org.json.JSONException;
+import com.example.nfcproject.LoginAndSplash.InitialFragment;
+import com.example.nfcproject.MainActivity;
+import com.example.nfcproject.NewSagaSelectionFragment;
+import com.example.nfcproject.ProfileConfigFragment;
+import com.example.nfcproject.R;
 
 
-public class SagaMenuFragment extends Fragment {
+public class SeekerSagaMenuFragment extends Fragment {
 
-    public SagaMenuFragment() {
+    public SeekerSagaMenuFragment() {
         //required empty public constructor
     }
 
-    static SagaMenuFragment newInstance() {
-        return new SagaMenuFragment();
+    public static SeekerSagaMenuFragment newInstance() {
+        return new SeekerSagaMenuFragment();
     }
 
     public static final String SHARED_PREF = "sharedPref";
@@ -36,7 +39,7 @@ public class SagaMenuFragment extends Fragment {
         toJourneyMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JourneyMenuFragment jmf = JourneyMenuFragment.newInstance();
+                SeekerJourneyMenuFragment jmf = SeekerJourneyMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, jmf, "JourneyMenuFragment")
                         .addToBackStack(null)

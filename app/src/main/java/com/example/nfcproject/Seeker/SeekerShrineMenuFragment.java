@@ -1,7 +1,6 @@
-package com.example.nfcproject;
+package com.example.nfcproject.Seeker;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,16 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-public class ShrineMenuFragment extends Fragment {
+import com.example.nfcproject.MainActivity;
+import com.example.nfcproject.R;
 
-    public ShrineMenuFragment() {
+public class SeekerShrineMenuFragment extends Fragment {
+
+    public SeekerShrineMenuFragment() {
         //required empty public constructor
     }
-    static ShrineMenuFragment newInstance() {
-        return new ShrineMenuFragment();
+    static SeekerShrineMenuFragment newInstance() {
+        return new SeekerShrineMenuFragment();
     }
 
     @Override
@@ -27,7 +29,7 @@ public class ShrineMenuFragment extends Fragment {
         toShrineSpecifics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShrineSpecificsFragment ssf = ShrineSpecificsFragment.newInstance();
+                SeekerShrineSpecificsFragment ssf = SeekerShrineSpecificsFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, ssf, "ShrineSpecificsFragment")
                         .addToBackStack(null)
@@ -40,7 +42,7 @@ public class ShrineMenuFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JourneyMenuFragment jmf = JourneyMenuFragment.newInstance();
+                SeekerJourneyMenuFragment jmf = SeekerJourneyMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, jmf, "JourneyMenuFragment")
                         .addToBackStack(null)
