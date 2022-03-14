@@ -29,6 +29,10 @@ import com.google.android.gms.location.LocationServices;
 
 public class ShrineSpecificsFragment extends Fragment implements SensorEventListener {
 
+    //gps services
+    private SensorManager mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+    private FusedLocationProviderClient FusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+
 
     GeomagneticField mGeomagneticField;
     Location myLocation = new Location("") ;
@@ -64,10 +68,9 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         });
 
         ///guiding stuffs
-        SensorManager mSensorManager;
-        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        ///vvv not sure why this cant go above on create
         mSensorManager.registerListener(this,mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME);
-        FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+        ////
 
         mp = MediaPlayer.create(getContext(), R.raw.conxiuguide);
         mp2 = MediaPlayer.create(getContext(),R.raw.conxiuguidedrmz);
@@ -147,6 +150,5 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         destination.setLongitude(-73.23584);
         return destination;
     }
-
 
 }
