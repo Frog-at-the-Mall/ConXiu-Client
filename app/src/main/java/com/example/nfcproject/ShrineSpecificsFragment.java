@@ -22,7 +22,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
-import com.gauravk.audiovisualizer.visualizer.BlastVisualizer;
+//import com.gauravk.audiovisualizer.visualizer.BlastVisualizer;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -76,7 +76,7 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         mp.setLooping(true);
         mp2.setLooping(true);
 
-        BlastVisualizer mVisualizer = ShrineSpecifics.findViewById(R.id.blast);
+        //BlastVisualizer mVisualizer = ShrineSpecifics.findViewById(R.id.blast);
        // mVisualizer.setAudioSessionId(mp.getAudioSessionId());
 
         return ShrineSpecifics;
@@ -85,6 +85,7 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+
 
         float trueHeading = Math.round(computeTrueNorth(sensorEvent.values[0]));
         float relativeBearing = myLocation.bearingTo(myDestination) + 360 - trueHeading;
@@ -123,9 +124,6 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         Log.d("Left Volume : " , String.valueOf(leftVol));
         Log.d("Right Volume: " , String.valueOf(rightVol));
 
-
-
-
     }
 
     @Override
@@ -145,8 +143,8 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
         Location destination = new Location("");
         //west of me => 44.484869171461725, -73.23584437166608  expected 1770m, read 1761
         //east of me => 44.487011, -73.130027 expected 6.95 , read 6662
-        destination.setLatitude(44.487011);
-        destination.setLongitude(-73.130027);
+        destination.setLatitude(44.484861);
+        destination.setLongitude(-73.23584);
         return destination;
     }
 
