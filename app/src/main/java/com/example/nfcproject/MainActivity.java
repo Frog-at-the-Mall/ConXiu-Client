@@ -28,15 +28,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.nfcproject.Capsule.Byte_Array;
-import com.example.nfcproject.Capsule.Capsule;
-import com.example.nfcproject.Capsule.Encryption;
+import com.example.nfcproject.DataRep.Capsule.Encryption;
+import com.example.nfcproject.LoginAndSplash.InitialFragment;
+import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -46,9 +44,7 @@ import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -170,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     } //End OnCreate
 
     public void onClick(View v) {
-        SagaMenuFragment smf = SagaMenuFragment.newInstance();
+        SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
                 .commit();
@@ -206,8 +202,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        NodeFragment testVisibility = (NodeFragment) getSupportFragmentManager().findFragmentByTag("NodeFragment");
-        if (testVisibility != null && testVisibility.isAdded() && testVisibility.isVisible()) {
+//        NodeFragment testVisibility = (NodeFragment) getSupportFragmentManager().findFragmentByTag("NodeFragment");
+//        if (testVisibility != null && testVisibility.isAdded() && testVisibility.isVisible()) {
             if (checkPermission()) { //here is where we check for permissions... before invoking the method resolveIntent which begins our NFC blocks and GPS comparison ping
                 try {
                     resolveIntent(intent);
@@ -227,9 +223,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Permissions for NFC and/or Fine Location Access have been denied. Please allow permissions for use in the app.", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(this, "Connect on the NODE screen", Toast.LENGTH_SHORT).show();
-        }
+//        } else {
+//            Toast.makeText(this, "Connect on the NODE screen", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     private void resolveIntent(Intent intent) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
@@ -290,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openSagaMenuFrag(){
-        SagaMenuFragment smf = SagaMenuFragment.newInstance();
+        SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
                 .commit();
@@ -495,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    boolean checkPermission() {
+    public boolean checkPermission() {
         boolean islocationPermissionGiven = false;
         boolean isNfcPermissionGiven = false;
         boolean isInternetPermissionGiven = false;

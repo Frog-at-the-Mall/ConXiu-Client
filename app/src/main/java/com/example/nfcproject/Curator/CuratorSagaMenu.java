@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.Curator;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,12 +8,15 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.nfcproject.R;
+import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
+
 public class CuratorSagaMenu extends Fragment {
     public CuratorSagaMenu() {
         //required empty public constructor
     }
 
-    static CuratorSagaMenu newInstance() {
+    public static CuratorSagaMenu newInstance() {
         return new CuratorSagaMenu();
     }
 
@@ -25,7 +28,7 @@ public class CuratorSagaMenu extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
                         .addToBackStack(null)

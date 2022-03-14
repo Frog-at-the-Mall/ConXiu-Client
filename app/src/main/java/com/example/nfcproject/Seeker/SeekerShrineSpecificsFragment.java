@@ -1,7 +1,5 @@
 package com.example.nfcproject;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 import android.content.Context;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
@@ -10,16 +8,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.media.MediaPlayer;
-import android.media.audiofx.Visualizer;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 //import com.gauravk.audiovisualizer.visualizer.BlastVisualizer;
@@ -27,7 +22,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
 
-public class ShrineSpecificsFragment extends Fragment implements SensorEventListener {
+public class SeekerShrineSpecificsFragment extends Fragment implements SensorEventListener {
 
 
     GeomagneticField mGeomagneticField;
@@ -37,11 +32,11 @@ public class ShrineSpecificsFragment extends Fragment implements SensorEventList
     MediaPlayer mp2;
 
 
-    public ShrineSpecificsFragment() {
+    public SeekerShrineSpecificsFragment() {
         //required empty public constructor
     }
-    static ShrineSpecificsFragment newInstance() {
-        return new ShrineSpecificsFragment();
+    static SeekerShrineSpecificsFragment newInstance() {
+        return new SeekerShrineSpecificsFragment();
     }
 
 

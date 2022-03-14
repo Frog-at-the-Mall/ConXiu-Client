@@ -1,7 +1,6 @@
-package com.example.nfcproject;
+package com.example.nfcproject.Seeker;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +8,19 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.nfcproject.MainActivity;
+import com.example.nfcproject.R;
+
 
 //rando push
-public class JourneyMenuFragment extends Fragment {
+public class SeekerJourneyMenuFragment extends Fragment {
 
-    public JourneyMenuFragment() {
+    public SeekerJourneyMenuFragment() {
         //required empty public constructor
     }
 
-    static JourneyMenuFragment newInstance() {
-        return new JourneyMenuFragment();
+    static SeekerJourneyMenuFragment newInstance() {
+        return new SeekerJourneyMenuFragment();
     }
 
     @Override
@@ -30,7 +32,7 @@ public class JourneyMenuFragment extends Fragment {
         toShrineMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShrineMenuFragment smf = ShrineMenuFragment.newInstance();
+                SeekerShrineMenuFragment smf = SeekerShrineMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, smf, "ShrineMenuFragment")
                         .addToBackStack(null)
@@ -43,7 +45,7 @@ public class JourneyMenuFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
                         .addToBackStack(null)

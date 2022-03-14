@@ -8,13 +8,16 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.nfcproject.Curator.CuratorSagaMenu;
+import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
+
 public class NewSagaSelectionFragment extends Fragment {
 
     public NewSagaSelectionFragment() {
         //required empty public constructor
     }
 
-    static NewSagaSelectionFragment newInstance() {
+    public static NewSagaSelectionFragment newInstance() {
         return new NewSagaSelectionFragment();
     }
 
@@ -27,7 +30,7 @@ public class NewSagaSelectionFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SagaMenuFragment smf = SagaMenuFragment.newInstance();
+                SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
                         .addToBackStack(null)
