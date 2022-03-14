@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.NFC_Classes;
 
 import android.net.Uri;
 import android.nfc.NdefRecord;

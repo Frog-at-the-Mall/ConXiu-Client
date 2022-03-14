@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.NFC_Classes;
 
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;

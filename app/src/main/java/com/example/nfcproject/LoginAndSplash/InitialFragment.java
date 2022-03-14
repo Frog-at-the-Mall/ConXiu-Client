@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.Login_And_Splash;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.nfcproject.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +22,7 @@ public class InitialFragment extends Fragment {
         // Required empty public constructor
     }
 
-    static InitialFragment newInstance() {
+    public static InitialFragment newInstance() {
         return new InitialFragment();
     }
 
