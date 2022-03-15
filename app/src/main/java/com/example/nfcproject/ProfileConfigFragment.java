@@ -45,6 +45,7 @@ public class ProfileConfigFragment extends Fragment {
         final View ProfileConfigMenu = inflater.inflate(R.layout.profile_config, container, false);
 
         SharedPreferences prefs = getActivity().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
         String username = prefs.getString(USERNAME,"");
 
         RequestQueue mQueue = Volley.newRequestQueue(getActivity());
@@ -93,7 +94,7 @@ public class ProfileConfigFragment extends Fragment {
                             e.printStackTrace();
                         }
 
-                        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"/login/editUser",json, response -> {
+                        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,URL+"login/editUser",json, response -> {
                             Boolean successCheck = false;
                             String returnMsg = "Error";
                             try {
@@ -104,7 +105,19 @@ public class ProfileConfigFragment extends Fragment {
                             }
                             if (successCheck == true) {
                                 // Credentials changed
+                                try {
+                                    editor.putString(JWT, (String) response.get("token"));
+                                    editor.putString(USERNAME, newUsername);
+                                    editor.commit();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 Toast.makeText(getActivity(), "Credentials updated", Toast.LENGTH_SHORT).show();
+                                SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
+                                requireActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.replaceFrame, smf, "SagaMenuFragment")
+                                        .addToBackStack(null)
+                                        .commit();
                             } else {
                                 Toast.makeText(getActivity(), returnMsg, Toast.LENGTH_SHORT).show();
                             }
