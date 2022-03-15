@@ -16,7 +16,7 @@ public class SeekerShrineMenuFragment extends Fragment {
     public SeekerShrineMenuFragment() {
         //required empty public constructor
     }
-    static SeekerShrineMenuFragment newInstance() {
+    public static SeekerShrineMenuFragment newInstance() {
         return new SeekerShrineMenuFragment();
     }
 
