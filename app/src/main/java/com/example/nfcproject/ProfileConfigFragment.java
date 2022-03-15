@@ -39,6 +39,9 @@ public class ProfileConfigFragment extends Fragment {
     public static final String JWT = "jwt";
     public static final String USERNAME = "username";
 
+    private String newUsername;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
@@ -76,7 +79,7 @@ public class ProfileConfigFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                String newUsername = editT_Username.getText().toString();
+                newUsername = editT_Username.getText().toString();
                 String newPassword = editT_newPassword.getText().toString();
                 String reNewPassword = editT_rePassword.getText().toString();
                 String curPassword = editT_Password.getText().toString();
@@ -105,13 +108,9 @@ public class ProfileConfigFragment extends Fragment {
                             }
                             if (successCheck == true) {
                                 // Credentials changed
-                                try {
-                                    editor.putString(JWT, (String) response.get("token"));
-                                    editor.putString(USERNAME, newUsername);
-                                    editor.commit();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                //editor.putString(JWT, (String) response.get("token"));
+                                editor.putString(USERNAME, newUsername);
+                                editor.commit();
                                 Toast.makeText(getActivity(), "Credentials updated", Toast.LENGTH_SHORT).show();
                                 SeekerSagaMenuFragment smf = SeekerSagaMenuFragment.newInstance();
                                 requireActivity().getSupportFragmentManager().beginTransaction()

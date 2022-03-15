@@ -167,7 +167,7 @@ public class LoginActivity extends Activity {
                     SharedPreferences.Editor editor = prefs.edit();
                     try {
                         editor.putString(JWT, (String) response.get("token"));
-                        editor.putString(USERNAME, (String) username_str);
+                        editor.putString(USERNAME, username_str);
                         editor.commit();
                     } catch (JSONException e) {
                         e.printStackTrace();
