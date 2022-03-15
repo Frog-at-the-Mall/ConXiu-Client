@@ -1,6 +1,6 @@
-package com.example.nfcproject.DataRep.Capsule;
+package com.example.nfcproject.DataRep;
 
-import static com.example.nfcproject.DataRep.Capsule.Byte_Array.concatenate;
+import static com.example.nfcproject.DataRep.Byte_Array.concatenate;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -9,27 +9,27 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class Capsule {
+class Capsule {
 
-	public Capsule innerCapsule(SecretKey key) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+	protected Capsule innerCapsule(SecretKey key) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
 		byte [] unencryptedInnerData = Encryption.encryptedByteArray_to_plainTextByteArray(this.encryptedInnerData, key);
 		byte [][] decat = splitFields(unencryptedInnerData);
 
 		byte[] coordsBytes = decat[0];
 		double[] coords = Byte_Array.byteArrayToCoords(coordsBytes);
 		byte[] messageBytes = decat[1];
-		String message = (String)Byte_Array.byteArrayToCharSequence(messageBytes);
+		String message = (String) Byte_Array.byteArrayToCharSequence(messageBytes);
 		byte[] innerInnerData = decat[2];
 		return new Capsule(coords[0], coords[1], message, key, innerInnerData);
 	}
 
-	public Capsule outerCapsule(double lat, double lon, CharSequence message, SecretKey key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+	protected Capsule outerCapsule(double lat, double lon, CharSequence message, SecretKey key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
 		return new Capsule(lat, lon, message, key, this.asBytes());
 	}
 
-	public double[] getCoords(){
+	protected double[] getCoords(){
 		return this.latLon;}
-	public CharSequence getMessage(){
+	protected CharSequence getMessage(){
 		return this.message;}
 
 

@@ -32,7 +32,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.nfcproject.DataRep.Capsule.Encryption;
+import com.example.nfcproject.DataRep.Encryption;
 import com.example.nfcproject.LoginAndSplash.InitialFragment;
 import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
 import com.google.android.material.snackbar.Snackbar;
