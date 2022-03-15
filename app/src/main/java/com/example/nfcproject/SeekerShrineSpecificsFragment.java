@@ -42,21 +42,21 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
 
     private static final int PERMISSION_ID = 44;
     //gps services
-    private SensorManager mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-    private FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
-    private Context mContext = getContext();
+
+
 
     GeomagneticField mGeomagneticField;
     Location myLocation = new Location("") ;
     Location myDestination = getDestination();
     MediaPlayer mp;
     MediaPlayer mp2;
+    private FusedLocationProviderClient mFusedLocationClient;
 
 
     public SeekerShrineSpecificsFragment() {
         //required empty public constructor
     }
-    static SeekerShrineSpecificsFragment newInstance() {
+    public static SeekerShrineSpecificsFragment newInstance() {
         return new SeekerShrineSpecificsFragment();
     }
 
@@ -81,7 +81,10 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
 
         ///guiding stuffs
         ///vvv not sure why this cant go above on create
+        SensorManager mSensorManager =(SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         mSensorManager.registerListener(this,mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+
         ////
 
         mp = MediaPlayer.create(getContext(), R.raw.conxiuguide);
@@ -226,7 +229,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
     // method to check
     // if location is enabled
     private boolean isLocationEnabled() {
-        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 

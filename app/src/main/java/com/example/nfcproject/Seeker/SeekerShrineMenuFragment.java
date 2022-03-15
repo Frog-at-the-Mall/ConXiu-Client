@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.nfcproject.MainActivity;
 import com.example.nfcproject.R;
+import com.example.nfcproject.SeekerShrineSpecificsFragment;
 
 public class SeekerShrineMenuFragment extends Fragment {
 
