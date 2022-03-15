@@ -44,7 +44,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
     //gps services
     private SensorManager mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
     private FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
-
+    private Context mContext = getContext();
 
     GeomagneticField mGeomagneticField;
     Location myLocation = new Location("") ;
@@ -226,7 +226,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
     // method to check
     // if location is enabled
     private boolean isLocationEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
