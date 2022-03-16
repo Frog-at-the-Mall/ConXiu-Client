@@ -1,17 +1,28 @@
 package com.example.nfcproject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.nfcproject.Curator.CuratorSagaMenu;
+import com.example.nfcproject.DataRep.Saga;
 import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 public class NewSagaSelectionFragment extends Fragment {
+
+    SharedPreferences sp = getActivity().getSharedPreferences("Sagas", Context.MODE_PRIVATE);
 
     public NewSagaSelectionFragment() {
         //required empty public constructor
@@ -43,7 +54,13 @@ public class NewSagaSelectionFragment extends Fragment {
         seek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO implement scanning new tag in NewSagaSelectionFragment
                 //toast for scanning a new tag
+                //start the NFC listener
+                //handle the read tag
+                //query server with that hash/id
+                //addSagaToSharedPrefs(returnedSaga);
+                //toast success
             }
         });
 
@@ -59,7 +76,20 @@ public class NewSagaSelectionFragment extends Fragment {
                 //csmf.setLocalState("example state"); // carry over state as needed
             }
         });
-
         return NewSagaSelection;
+    }
+
+    //accepts a saga and stores it in the shared prefs of main activity
+    private void addSagaToSharedPrefs(String key, Saga value) {
+        //retrieve sagas
+        Gson gson = new Gson();
+        String retrievedJson = sp.getString("Sagas", "");
+        ArrayList<Saga> sagas = gson.fromJson(retrievedJson, new TypeToken<ArrayList<Saga>>(){}.getType());
+        //add and store new saga
+        sagas.add(value);
+        SharedPreferences.Editor editor = sp.edit();
+        String submittedJson = gson.toJson(sagas);
+        editor.putString("Sagas", submittedJson);
+        editor.apply(); //background process instead of instant commit()
     }
 }
