@@ -40,10 +40,6 @@ import com.google.android.gms.tasks.Task;
 
 public class SeekerShrineSpecificsFragment extends Fragment implements SensorEventListener {
 
-    private static final int PERMISSION_ID = 44;
-    //gps services
-
-
 
     GeomagneticField mGeomagneticField;
     Location myLocation = new Location("") ;
@@ -51,6 +47,9 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
     MediaPlayer mp;
     MediaPlayer mp2;
     private FusedLocationProviderClient mFusedLocationClient;
+
+    private static final int PERMISSION_ID = 44;
+    //gps services
 
 
     public SeekerShrineSpecificsFragment() {

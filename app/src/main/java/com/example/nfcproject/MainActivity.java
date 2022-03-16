@@ -61,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     PendingIntent pendingIntent;
     NfcAdapter nfcAdapter;
-    //maybe change to public so shrineSpecificFrag can use it.
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-     Location deviceLocation;
-
     private Button welcome_login_btn;
 
     public static final String URL = "http://ec2-18-190-157-121.us-east-2.compute.amazonaws.com:3000/";
@@ -112,44 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         //end of NFC setup for onCreate
 
-        if (checkPermission()) {
-            locationManager = (LocationManager) Objects.requireNonNull(getSystemService(LOCATION_SERVICE));
 
-            Location LKL = locationManager.getLastKnownLocation("gps");
-
-            if (LKL != null) {
-                deviceLocation = new Location(LKL);
-            }
-            else {
-                deviceLocation = new Location("LocationManager#GPS_PROVIDER");
-            }
-        }
-        else {
-            Toast.makeText(this, "You did not enable location, NFC and Internet permissions. App will not function properly.", Toast.LENGTH_LONG).show();
-        }
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                deviceLocation.setLatitude(location.getLatitude());
-                deviceLocation.setLongitude(location.getLongitude());
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
 
         // Gets the JWT from shared prefs, if none it will be set to ""
         SharedPreferences prefs = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
@@ -591,29 +549,10 @@ public class MainActivity extends AppCompatActivity {
         return isNfcPermissionGiven && islocationPermissionGiven && isInternetPermissionGiven; //did user give all permissions?
     }
 
-    //do not call this if user has not given ACCESS FINE LOCATION permission
-    @SuppressLint("MissingPermission")
-    private void getLocation() {
-        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
-    }
+
 
     //is user within 25 metres of tag's known geolocation?
-    private boolean isUserInCorrectLocation() {
 
-        //
-        //temporary hard-coded coordinates, will replace with server query later
-        Location tagLocation = new Location("");
-        //tagLocation.setLatitude(44.460050);
-        //tagLocation.setLongitude(-73.157703);
-        //temporary hard-coded coordinates, will replace with server query later
-        //
-
-        tagLocation.setLongitude(nextShrineLocation[0]);
-        tagLocation.setLatitude(nextShrineLocation[1]);
-        float distanceBetweenDeviceAndTag = deviceLocation.distanceTo(tagLocation);
-
-        return distanceBetweenDeviceAndTag < 20;
-    }
 
 //<<<<<<< HEAD
 //=======
