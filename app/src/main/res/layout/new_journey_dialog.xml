@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/newJourneyDialogHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/newJourneyHeader"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/newJourneyNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/newJourneyNameHint"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/newJourneyDescInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:hint="@string/newSagaDescriptionHint"
+        android:inputType="textMultiLine"
+        android:maxLines="10"
+        android:scrollbars="vertical" />
+
+    <Button
+        android:id="@+id/newJourneySubmitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submitBtnLabel" />
+
+</LinearLayout>
