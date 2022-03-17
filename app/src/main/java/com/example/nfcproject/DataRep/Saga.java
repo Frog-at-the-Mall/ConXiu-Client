@@ -16,7 +16,7 @@ public class Saga implements SortedSet {
 	String sagaName;
 	int sagaID;
 
-	public Saga(int sagaID, String sagaName, ArrayList<Journey> journeys){
+	public Saga(int sagaID, String sagaName, ArrayList<Journey> journeys) {
 		this.sagaID = sagaID;
 		this.sagaName = sagaName;
 		this.journeys = new TreeSet<>();

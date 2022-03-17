@@ -40,17 +40,17 @@ import com.google.android.gms.tasks.Task;
 
 public class SeekerShrineSpecificsFragment extends Fragment implements SensorEventListener {
 
-    private static final int PERMISSION_ID = 44;
-    //gps services
 
-
-
+    FusedLocationProviderClient mFusedLocationClient;
     GeomagneticField mGeomagneticField;
     Location myLocation = new Location("") ;
     Location myDestination = getDestination();
     MediaPlayer mp;
     MediaPlayer mp2;
-    private FusedLocationProviderClient mFusedLocationClient;
+
+
+    private static final int PERMISSION_ID = 44;
+    //gps services
 
 
     public SeekerShrineSpecificsFragment() {
@@ -142,6 +142,10 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
         Log.d("Left Volume : " , String.valueOf(leftVol));
         Log.d("Right Volume: " , String.valueOf(rightVol));
 
+        //dankmethod
+        getLastLocation();
+
+
     }
 
     @Override
@@ -168,6 +172,8 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
                         } else {
                             //do something (check with tut)
                            requestNewLocationData();
+                            Log.d("Latitude:", String.valueOf(location.getLatitude()));
+                            Log.d("Longitude:", String.valueOf(location.getLongitude()));
                            
                         }
                     }
@@ -206,7 +212,9 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
             mGeomagneticField = new GeomagneticField((float)mLastLocation.getLatitude(),(float)mLastLocation.getLongitude(),(float)mLastLocation.getAltitude(), System.currentTimeMillis());
-            
+
+            Log.d("Latitude:", String.valueOf(mLastLocation.getLatitude()));
+            Log.d("Longitude:", String.valueOf(mLastLocation.getLongitude()));
 
         }
     };
