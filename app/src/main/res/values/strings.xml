@@ -41,7 +41,28 @@
     <string name="curator_shrine_specifics_next_location">next location</string>
     <string name="curator_shrine_specifics_nature">nature keyword</string>
     <string name="curator_shrine_specifics_audio_path">audio path on disk</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    // Create New Dialog Strings //
+        // Universal
+    <string name="submitBtnLabel">Submit</string>
+        // Saga
+    <string name="newSagaHeader">Enter new Saga Details</string>
+    <string name="newSagaNameHint">Saga name</string>
+    <string name="newSagaDescriptionHint">Saga description</string>
+        // Journey
+    <string name="newJourneyHeader">Enter new Journey Details</string>
+    <string name="newJourneyNameHint">Journey name</string>
+    <string name="newJourneyDescriptionHint">Journey description</string>
+        // Shrine
+    <string name="newShrineHeader">Enter new Shrine Details</string>
+    <string name="newShrineNameHint">Shrine name</string>
+    <string name="newShrineDescriptionHint">Shrine description</string>
+    <string name="newShrineMeditationHint">Meditation Prompt</string>
+    <string name="newShrineAcceptedRespHint">Accepted Responses</string>
+    <string name="newShrineGetCordBtnLabel">Get Coordinates</string>
+
+
+
+
 
 </resources>

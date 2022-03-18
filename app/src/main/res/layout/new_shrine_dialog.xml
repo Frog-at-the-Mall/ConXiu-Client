@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/newShrineDialogHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/newShrineHeader"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/newShrineNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/newShrineNameHint"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/newShrineDescInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:maxLines="10"
+        android:hint="@string/newSagaDescriptionHint"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical" />
+
+    <EditText
+        android:id="@+id/newShineMeditationInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/newShrineMeditationHint"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/newShrineAcceptedResp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/newShrineAcceptedRespHint"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/newShineGetCordBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/newShrineGetCordBtnLabel" />
+
+    <Button
+        android:id="@+id/newShrineSubmitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submitBtnLabel" />
+
+</LinearLayout>
