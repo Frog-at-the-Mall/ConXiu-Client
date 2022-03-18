@@ -57,10 +57,11 @@
     <string name="newShrineHeader">Enter new Shrine Details</string>
     <string name="newShrineNameHint">Shrine name</string>
     <string name="newShrineDescriptionHint">Shrine description</string>
-    <string name="newShrineMeditationHint">Meditation Prompt</string>
-    <string name="newShrineAcceptedRespHint">Accepted Responses</string>
-    <string name="newShrineGetCordBtnLabel">Get Coordinates</string>
+    <string name="newShrineMeditationHint">Meditation prompt</string>
+    <string name="newShrineAcceptedRespHint">Accepted responses</string>
+    <string name="newShrineGetCordBtnLabel">Get Location</string>
 
+    // Profile Config Menu Strings //
 
 
 

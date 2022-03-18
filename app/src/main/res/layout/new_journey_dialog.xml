@@ -1,37 +1,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FA0A0A0A">
 
     <TextView
         android:id="@+id/newJourneyDialogHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/newJourneyHeader"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_marginTop="5dp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/newJourneyNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
         android:hint="@string/newJourneyNameHint"
-        android:inputType="textPersonName" />
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:padding="20dp"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#8E8E8E" />
 
     <EditText
         android:id="@+id/newJourneyDescInput"
+        android:hint="@string/newJourneyDescriptionHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="top"
-        android:hint="@string/newSagaDescriptionHint"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:imeOptions="actionDone"
+        android:padding="20dp"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#8E8E8E"
         android:inputType="textMultiLine"
-        android:maxLines="10"
-        android:scrollbars="vertical" />
+        android:minLines="3"
+        android:maxLines="6"
+        android:gravity="top"/>
 
     <Button
         android:id="@+id/newJourneySubmitBtn"
+        android:text="@string/submitBtnLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submitBtnLabel" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"/>
 
 </LinearLayout>

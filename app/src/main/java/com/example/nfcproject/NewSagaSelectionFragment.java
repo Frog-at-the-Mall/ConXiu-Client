@@ -56,6 +56,8 @@ public class NewSagaSelectionFragment extends Fragment {
         ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
         final View NewSagaSelection = inflater.inflate(R.layout.new_saga_selection, container, false);
 
+        sp = getActivity().getSharedPreferences("Sagas", Context.MODE_PRIVATE);
+
         Button back = NewSagaSelection.findViewById(R.id.new_saga_select_back); //back button
         back.setOnClickListener(new View.OnClickListener() {
             @Override

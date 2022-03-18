@@ -1,37 +1,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FA0A0A0A">
 
     <TextView
         android:id="@+id/newSagaDialogHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/newSagaHeader"
-        android:textAlignment="center" />
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF" />
 
     <EditText
         android:id="@+id/newSagaNameInput"
+        android:hint="@string/newSagaNameHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/newSagaNameHint"
-        android:inputType="textPersonName" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:imeOptions="actionDone"
+        android:padding="20dp"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#8E8E8E"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/newSagaDescInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="top"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
         android:hint="@string/newSagaDescriptionHint"
         android:inputType="textMultiLine"
-        android:maxLines="10"
-        android:scrollbars="vertical" />
+        android:minLines="3"
+        android:maxLines="6"
+        android:gravity="top"
+        android:padding="20dp"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#8E8E8E" />
 
     <Button
         android:id="@+id/newSagaSubmitBtn"
+        android:text="@string/submitBtnLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submitBtnLabel" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"/>
 
 </LinearLayout>
