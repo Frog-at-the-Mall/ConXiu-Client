@@ -1,4 +1,4 @@
-package com.example.nfcproject;
+package com.example.nfcproject.Seeker;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -28,7 +28,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 //import com.gauravk.audiovisualizer.visualizer.BlastVisualizer;
-import com.example.nfcproject.Seeker.SeekerShrineMenuFragment;
+import com.example.nfcproject.MainActivity;
+import com.example.nfcproject.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -72,7 +73,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
             public void onClick(View v) {
                 SeekerShrineMenuFragment smf = SeekerShrineMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.replaceFrame, smf, "ShrineMenuFragment")
+                        .replace(R.id.replaceFrame, smf, "SeekerShrineMenuFragment")
                         .addToBackStack(null)
                         .commit();
                 //jmf.setLocalState("example state");         //just to carry over state as needed

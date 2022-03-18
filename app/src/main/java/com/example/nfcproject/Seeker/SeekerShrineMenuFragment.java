@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.nfcproject.MainActivity;
 import com.example.nfcproject.R;
-import com.example.nfcproject.SeekerShrineSpecificsFragment;
 
 public class SeekerShrineMenuFragment extends Fragment {
 
@@ -32,7 +31,7 @@ public class SeekerShrineMenuFragment extends Fragment {
             public void onClick(View v) {
                 SeekerShrineSpecificsFragment ssf = SeekerShrineSpecificsFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.replaceFrame, ssf, "ShrineSpecificsFragment")
+                        .replace(R.id.replaceFrame, ssf, "SeekerShrineSpecificsFragment")
                         .addToBackStack(null)
                         .commit();
                 //ssf.setLocalState("example state");         //just to carry over state as needed
@@ -45,7 +44,7 @@ public class SeekerShrineMenuFragment extends Fragment {
             public void onClick(View v) {
                 SeekerJourneyMenuFragment jmf = SeekerJourneyMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.replaceFrame, jmf, "JourneyMenuFragment")
+                        .replace(R.id.replaceFrame, jmf, "SeekerJourneyMenuFragment")
                         .addToBackStack(null)
                         .commit();
                 //jmf.setLocalState("example state");         //just to carry over state as needed

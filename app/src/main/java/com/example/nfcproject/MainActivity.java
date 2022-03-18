@@ -32,9 +32,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.nfcproject.Curator.CuratorSagaMenu;
 import com.example.nfcproject.DataRep.Encryption;
 import com.example.nfcproject.LoginAndSplash.InitialFragment;
 import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
+import com.example.nfcproject.Seeker.SeekerShrineSpecificsFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     //maybe change to public so shrineSpecificFrag can use it.
     private LocationManager locationManager;
     private LocationListener locationListener;
-     Location deviceLocation;
+    Location deviceLocation;
 
     private Button welcome_login_btn;
 
@@ -193,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
     private void showWirelessSettings() throws InterruptedException {
         Toast.makeText(this, "Enable NFC on your device", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
-        //wait(2000); //wait 2 seconds for user to see toast, maybe implement button and redirect on user click in the future
+        wait(2000); //wait 2 seconds for user to see toast, maybe implement button and redirect on user click in the future
         startActivity(intent);
     }
 
@@ -202,26 +204,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-//        NodeFragment testVisibility = (NodeFragment) getSupportFragmentManager().findFragmentByTag("NodeFragment");
-//        if (testVisibility != null && testVisibility.isAdded() && testVisibility.isVisible()) {
             if (checkPermission()) { //here is where we check for permissions... before invoking the method resolveIntent which begins our NFC blocks and GPS comparison ping
                 try {
                     resolveIntent(intent);
-                } catch (InvalidAlgorithmParameterException e) {
-                    e.printStackTrace();
-                } catch (IllegalBlockSizeException e) {
-                    e.printStackTrace();
-                } catch (NoSuchPaddingException e) {
-                    e.printStackTrace();
-                } catch (BadPaddingException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (InvalidKeyException e) {
+                } catch (InvalidAlgorithmParameterException | IllegalBlockSizeException | NoSuchPaddingException | BadPaddingException | NoSuchAlgorithmException | InvalidKeyException e) {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(this, "Permissions for NFC and/or Fine Location Access have been denied. Please allow permissions for use in the app.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please allow permissions for use in the app.", Toast.LENGTH_SHORT).show();
             }
 //        } else {
 //            Toast.makeText(this, "Connect on the NODE screen", Toast.LENGTH_SHORT).show();
@@ -234,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+
             Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             NdefMessage[] msgs;
 
@@ -259,7 +250,39 @@ public class MainActivity extends AppCompatActivity {
                 //NdefMessage msg = new NdefMessage(new NdefRecord[]{record});
                 //msgs = new NdefMessage[]{msg};
             }
-            //displayMsgs(msgs);
+
+            //here's where we code in the functionality for NFC
+            //1st option is scanning a new saga in seeker new saga screen
+            NewSagaSelectionFragment nssfFragment = (NewSagaSelectionFragment)getSupportFragmentManager().findFragmentByTag("NewSagaSelectionFragment");
+            //2nd option is scanning a shrine in the shrinespecificsfragment screen
+            SeekerShrineSpecificsFragment sssfFragment = (SeekerShrineSpecificsFragment)getSupportFragmentManager().findFragmentByTag("SeekerShrineSpecificsFragment");
+            //3rd option is writing to a tag in the curator new saga creation screen, in sequence.
+            CuratorSagaMenu csmFragment = (CuratorSagaMenu)getSupportFragmentManager().findFragmentByTag("CuratorSagaMenuFragment");
+            //4th option is everywhere else, where we're met with a toast saying "you're not in the right screen"
+
+            //scan new saga into client
+            if (nssfFragment != null && nssfFragment.isVisible()) { //TODO: program functionality for adding a new saga in this case
+                //displayMsgs(msgs);
+                Toast.makeText(this,"You're on the new saga screen.", Toast.LENGTH_SHORT).show(); //test
+            }
+
+            //scanning a shrine in nature
+            else if (sssfFragment != null && sssfFragment.isVisible()) { //TODO: program functionality for handling a scanned shrine
+                //displayMsgs(msgs);
+                Toast.makeText(this,"You're on the shrine specifics fragment screen.", Toast.LENGTH_SHORT).show(); //test
+            }
+
+            //curator writing to shrines
+            else if (csmFragment != null && csmFragment.isVisible()) { //TODO: program functionality for writing to shrines after a game is finalized by a curator
+                //NFC write
+                Toast.makeText(this,"You're on the curator new saga screen.", Toast.LENGTH_SHORT).show(); //test
+            }
+
+            else { //you're not on the right screen for NFC read or write
+                Toast.makeText(this,"Scan a shrine on a valid screen.", Toast.LENGTH_SHORT).show();
+            }
+
+
         }
     }
     //write tag. not confirmed working, but at least it isn't throwing errors.
@@ -617,104 +640,5 @@ public class MainActivity extends AppCompatActivity {
 
 //<<<<<<< HEAD
 //=======
-//
-//
-////could be a server call down the road
-//    private void setSharedPreferencesDefaults() {
-//        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        //get defaults of all 81 nodes
-//        editor.putBoolean("BRCT", Boolean.parseBoolean(getString(R.string.BRCT)));
-//        editor.putBoolean("BRTL", Boolean.parseBoolean(getString(R.string.BRTL)));
-//        editor.putBoolean("BRML", Boolean.parseBoolean(getString(R.string.BRML)));
-//        editor.putBoolean("BRBR", Boolean.parseBoolean(getString(R.string.BRBR)));
-//        editor.putBoolean("BRTR", Boolean.parseBoolean(getString(R.string.BRTR)));
-//        editor.putBoolean("BRMR", Boolean.parseBoolean(getString(R.string.BRMR)));
-//        editor.putBoolean("BRCB", Boolean.parseBoolean(getString(R.string.BRCB)));
-//        editor.putBoolean("BRBL", Boolean.parseBoolean(getString(R.string.BRBL)));
-//        editor.putBoolean("BRCM", Boolean.parseBoolean(getString(R.string.BRCM))); Log.i("main activity defaults method", getString(R.string.BRCM));
-//
-//        editor.putBoolean("BLCT", Boolean.parseBoolean(getString(R.string.BLCT)));
-//        editor.putBoolean("BLTL", Boolean.parseBoolean(getString(R.string.BLTL)));
-//        editor.putBoolean("BLML", Boolean.parseBoolean(getString(R.string.BLML)));
-//        editor.putBoolean("BLBR", Boolean.parseBoolean(getString(R.string.BLBR)));
-//        editor.putBoolean("BLTR", Boolean.parseBoolean(getString(R.string.BLTR)));
-//        editor.putBoolean("BLMR", Boolean.parseBoolean(getString(R.string.BLMR)));
-//        editor.putBoolean("BLCB", Boolean.parseBoolean(getString(R.string.BLCB)));
-//        editor.putBoolean("BLBL", Boolean.parseBoolean(getString(R.string.BLBL)));
-//        editor.putBoolean("BLCM", Boolean.parseBoolean(getString(R.string.BLCM)));
-//
-//        editor.putBoolean("CBCT", Boolean.parseBoolean(getString(R.string.CBCT)));
-//        editor.putBoolean("CBTL", Boolean.parseBoolean(getString(R.string.CBTL)));
-//        editor.putBoolean("CBML", Boolean.parseBoolean(getString(R.string.CBML)));
-//        editor.putBoolean("CBBR", Boolean.parseBoolean(getString(R.string.CBBR)));
-//        editor.putBoolean("CBTR", Boolean.parseBoolean(getString(R.string.CBTR)));
-//        editor.putBoolean("CBMR", Boolean.parseBoolean(getString(R.string.CBMR)));
-//        editor.putBoolean("CBCB", Boolean.parseBoolean(getString(R.string.CBCB)));
-//        editor.putBoolean("CBBL", Boolean.parseBoolean(getString(R.string.CBBL)));
-//        editor.putBoolean("CBCM", Boolean.parseBoolean(getString(R.string.CBCM)));
-//
-//        editor.putBoolean("CMCT", Boolean.parseBoolean(getString(R.string.CMCT)));
-//        editor.putBoolean("CMTL", Boolean.parseBoolean(getString(R.string.CMTL)));
-//        editor.putBoolean("CMML", Boolean.parseBoolean(getString(R.string.CMML)));
-//        editor.putBoolean("CMBR", Boolean.parseBoolean(getString(R.string.CMBR)));
-//        editor.putBoolean("CMTR", Boolean.parseBoolean(getString(R.string.CMTR)));
-//        editor.putBoolean("CMMR", Boolean.parseBoolean(getString(R.string.CMMR)));
-//        editor.putBoolean("CMCB", Boolean.parseBoolean(getString(R.string.CMCB)));
-//        editor.putBoolean("CMBL", Boolean.parseBoolean(getString(R.string.CMBL)));
-//        editor.putBoolean("CMCM", Boolean.parseBoolean(getString(R.string.CMCM)));
-//
-//        editor.putBoolean("CTCT", Boolean.parseBoolean(getString(R.string.CTCT)));
-//        editor.putBoolean("CTTL", Boolean.parseBoolean(getString(R.string.CTTL)));
-//        editor.putBoolean("CTML", Boolean.parseBoolean(getString(R.string.CTML)));
-//        editor.putBoolean("CTBR", Boolean.parseBoolean(getString(R.string.CTBR)));
-//        editor.putBoolean("CTTR", Boolean.parseBoolean(getString(R.string.CTBR)));
-//        editor.putBoolean("CTMR", Boolean.parseBoolean(getString(R.string.CTMR)));
-//        editor.putBoolean("CTCB", Boolean.parseBoolean(getString(R.string.CTCB)));
-//        editor.putBoolean("CTBL", Boolean.parseBoolean(getString(R.string.CTBL)));
-//        editor.putBoolean("CTCM", Boolean.parseBoolean(getString(R.string.CTCM)));
-//
-//        editor.putBoolean("TRCT", Boolean.parseBoolean(getString(R.string.TRCT)));
-//        editor.putBoolean("TRTL", Boolean.parseBoolean(getString(R.string.TRTL)));
-//        editor.putBoolean("TRML", Boolean.parseBoolean(getString(R.string.TRML)));
-//        editor.putBoolean("TRBR", Boolean.parseBoolean(getString(R.string.TRBR)));
-//        editor.putBoolean("TRTR", Boolean.parseBoolean(getString(R.string.TRTR)));
-//        editor.putBoolean("TRMR", Boolean.parseBoolean(getString(R.string.TRMR)));
-//        editor.putBoolean("TRCB", Boolean.parseBoolean(getString(R.string.TRCB)));
-//        editor.putBoolean("TRBL", Boolean.parseBoolean(getString(R.string.TRBL)));
-//        editor.putBoolean("TRCM", Boolean.parseBoolean(getString(R.string.TRCM)));
-//
-//        editor.putBoolean("TLCT", Boolean.parseBoolean(getString(R.string.TLCT)));
-//        editor.putBoolean("TLTL", Boolean.parseBoolean(getString(R.string.TLTL)));
-//        editor.putBoolean("TLML", Boolean.parseBoolean(getString(R.string.TLML)));
-//        editor.putBoolean("TLBR", Boolean.parseBoolean(getString(R.string.TLBR)));
-//        editor.putBoolean("TLTR", Boolean.parseBoolean(getString(R.string.TLTR)));
-//        editor.putBoolean("TLMR", Boolean.parseBoolean(getString(R.string.TLMR)));
-//        editor.putBoolean("TLCB", Boolean.parseBoolean(getString(R.string.TLCB)));
-//        editor.putBoolean("TLBL", Boolean.parseBoolean(getString(R.string.TLBL)));
-//        editor.putBoolean("TLCM", Boolean.parseBoolean(getString(R.string.TLCM)));
-//
-//        editor.putBoolean("MRCT", Boolean.parseBoolean(getString(R.string.MRCT)));
-//        editor.putBoolean("MRTL", Boolean.parseBoolean(getString(R.string.MRTL)));
-//        editor.putBoolean("MRML", Boolean.parseBoolean(getString(R.string.MRML)));
-//        editor.putBoolean("MRBR", Boolean.parseBoolean(getString(R.string.MRBR)));
-//        editor.putBoolean("MRTR", Boolean.parseBoolean(getString(R.string.MRTR)));
-//        editor.putBoolean("MRMR", Boolean.parseBoolean(getString(R.string.MRMR)));
-//        editor.putBoolean("MRCB", Boolean.parseBoolean(getString(R.string.MRCB)));
-//        editor.putBoolean("MRBL", Boolean.parseBoolean(getString(R.string.MRBL)));
-//        editor.putBoolean("MRCM", Boolean.parseBoolean(getString(R.string.MRCM)));
-//
-//        editor.putBoolean("MLCT", Boolean.parseBoolean(getString(R.string.MLCT)));
-//        editor.putBoolean("MLTL", Boolean.parseBoolean(getString(R.string.MLTL)));
-//        editor.putBoolean("MLML", Boolean.parseBoolean(getString(R.string.MLML)));
-//        editor.putBoolean("MLBR", Boolean.parseBoolean(getString(R.string.MLBR)));
-//        editor.putBoolean("MLTR", Boolean.parseBoolean(getString(R.string.MLTR)));
-//        editor.putBoolean("MLMR", Boolean.parseBoolean(getString(R.string.MLMR)));
-//        editor.putBoolean("MLCB", Boolean.parseBoolean(getString(R.string.MLCB)));
-//        editor.putBoolean("MLBL", Boolean.parseBoolean(getString(R.string.MLBL)));
-//        editor.putBoolean("MLCM", Boolean.parseBoolean(getString(R.string.MLCM)));
-//        editor.apply();
-//    }
-//
 //>>>>>>> b91188f169aeb7a7bd8da9107709ed9087580fdc
 }

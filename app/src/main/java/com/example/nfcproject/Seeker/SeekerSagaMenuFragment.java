@@ -41,7 +41,7 @@ public class SeekerSagaMenuFragment extends Fragment {
             public void onClick(View v) {
                 SeekerJourneyMenuFragment jmf = SeekerJourneyMenuFragment.newInstance();
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.replaceFrame, jmf, "JourneyMenuFragment")
+                        .replace(R.id.replaceFrame, jmf, "SeekerJourneyMenuFragment")
                         .addToBackStack(null)
                         .commit();
                 //jmf.setLocalState("example state");         //just to carry over state as needed
