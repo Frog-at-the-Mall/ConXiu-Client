@@ -34,6 +34,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nfcproject.Curator.CuratorSagaMenu;
 import com.example.nfcproject.DataRep.Encryption;
+import com.example.nfcproject.DataRep.Saga;
 import com.example.nfcproject.LoginAndSplash.InitialFragment;
 import com.example.nfcproject.Seeker.SeekerSagaMenuFragment;
 import com.example.nfcproject.Seeker.SeekerShrineSpecificsFragment;
@@ -61,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
     double[] nextShrineLocation;
     String meditation_message;
 
+    //NFC
     PendingIntent pendingIntent;
     NfcAdapter nfcAdapter;
+    //NFC rep
+    private String rawNFCData;
+
     //maybe change to public so shrineSpecificFrag can use it.
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -264,6 +269,11 @@ public class MainActivity extends AppCompatActivity {
             if (nssfFragment != null && nssfFragment.isVisible()) { //TODO: program functionality for adding a new saga in this case
                 //displayMsgs(msgs);
                 Toast.makeText(this,"You're on the new saga screen.", Toast.LENGTH_SHORT).show(); //test
+                //handle the read tag to get hash
+                //query server with that hash/id
+                //receive saga and format it into objects properly
+                //NewSagaSelectionFragment.addSagaToSharedPrefs(formattedSaga);
+                //toast success
             }
 
             //scanning a shrine in nature
@@ -636,6 +646,19 @@ public class MainActivity extends AppCompatActivity {
         float distanceBetweenDeviceAndTag = deviceLocation.distanceTo(tagLocation);
 
         return distanceBetweenDeviceAndTag < 20;
+    }
+
+    //simple getter for the raw NFC data read from tag.
+    public String getRawNFCData() {
+        if (rawNFCData == null) {
+            return "";
+        }
+        return rawNFCData;
+    }
+
+    //simple setter for the raw NFC data saved after reading a tag
+    public void setRawNFCData(String data) {
+        rawNFCData = data;
     }
 
 //<<<<<<< HEAD

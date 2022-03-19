@@ -39,8 +39,8 @@ public class NewSagaSelectionFragment extends Fragment {
         }
     }
 
-    public static final String SHARED_PREF = "sharedPref";
-    SharedPreferences sp;
+    private static final String SHARED_PREF = "sharedPref";
+    private static SharedPreferences sp;
 
     public NewSagaSelectionFragment() {
         //required empty public constructor
@@ -77,12 +77,6 @@ public class NewSagaSelectionFragment extends Fragment {
             public void onClick(View view) {
                 //TODO implement scanning new tag in NewSagaSelectionFragment
                 Toast.makeText(getActivity(), "Scan a saga tag now.", Toast.LENGTH_SHORT).show();
-
-                //start the NFC listener, handle the read tag to get hash
-                //query server with that hash/id
-                //receive saga and format it into objects properly
-                //addSagaToSharedPrefs(returnedSaga);
-                //toast success
             }
         });
 
@@ -105,7 +99,7 @@ public class NewSagaSelectionFragment extends Fragment {
 
 
     //accepts a saga and stores it in the shared prefs of main activity
-    private void addSagaToSharedPrefs(String key, Saga value) {
+    public static void addSagaToSharedPrefs(String key, Saga value) {
         //retrieve sagas
         Gson gson = new Gson();
         String retrievedJson = sp.getString("Sagas", "");
