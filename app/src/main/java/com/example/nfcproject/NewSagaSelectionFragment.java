@@ -30,15 +30,6 @@ import java.util.Set;
 
 public class NewSagaSelectionFragment extends Fragment {
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Activity a;
-        if (context instanceof Activity){
-            a=(Activity) context;
-        }
-    }
-
     private static final String SHARED_PREF = "sharedPref";
     private static SharedPreferences sp;
 
@@ -52,7 +43,6 @@ public class NewSagaSelectionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Context mcontext = getContext();
         ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
         final View NewSagaSelection = inflater.inflate(R.layout.new_saga_selection, container, false);
 
