@@ -25,9 +25,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-//import com.gauravk.audiovisualizer.visualizer.BlastVisualizer;
+import com.chibde.visualizer.LineVisualizer;
 import com.example.nfcproject.MainActivity;
 import com.example.nfcproject.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -48,6 +49,9 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
     Location myDestination = getDestination();
     MediaPlayer mp;
     MediaPlayer mp2;
+    LineVisualizer lineVisualizer;
+
+
 
 
     private static final int PERMISSION_ID = 44;
@@ -67,6 +71,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
         ((MainActivity) requireActivity()).checkPermission(); //check for permissions immediately upon entering the fragment
 
         final View ShrineSpecifics = inflater.inflate(R.layout.shrine_specifics, container, false);
+        lineVisualizer = ShrineSpecifics.findViewById(R.id.visualizer);
         Button back = ShrineSpecifics.findViewById(R.id.shrine_specifics_back); //back button
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,9 +100,11 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
         mp.setLooping(true);
         mp2.setLooping(true);
 
+        lineVisualizer.setColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+        lineVisualizer.setStrokeWidth(1);
+        //lineVisualizer.setPlayer(mp.getAudioSessionId());
 
-        //BlastVisualizer mVisualizer = ShrineSpecifics.findViewById(R.id.blast);
-       // mVisualizer.setAudioSessionId(mp.getAudioSessionId());
+
 
         return ShrineSpecifics;
     }
