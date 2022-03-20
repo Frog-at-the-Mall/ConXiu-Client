@@ -95,6 +95,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
         mp.setLooping(true);
         mp2.setLooping(true);
 
+
         //BlastVisualizer mVisualizer = ShrineSpecifics.findViewById(R.id.blast);
        // mVisualizer.setAudioSessionId(mp.getAudioSessionId());
 
@@ -106,8 +107,8 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
     public void onSensorChanged(SensorEvent sensorEvent) {
 
 
-        float trueHeading = Math.round(computeTrueNorth(sensorEvent.values[0]));
-        float relativeBearing = myLocation.bearingTo(myDestination) + 360 - trueHeading;
+        float trueHeading = Math.round(computeTrueNorth(sensorEvent.values[0]));//direction you are heading in degrees
+        float relativeBearing = myLocation.bearingTo(myDestination)  - trueHeading; //degrees you are pointing away from the right direction
         Log.d("True Heading: " , String.valueOf(trueHeading));
         Log.d("Relative Bearing: " , String.valueOf(relativeBearing));
 
@@ -140,8 +141,8 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
             mp.setVolume(leftVol,rightVol);
         }
 
-        Log.d("Left Volume : " , String.valueOf(leftVol));
-        Log.d("Right Volume: " , String.valueOf(rightVol));
+//        Log.d("Left Volume : " , String.valueOf(leftVol));
+//        Log.d("Right Volume: " , String.valueOf(rightVol));
 
         //dankmethod
         getLastLocation();
@@ -151,6 +152,8 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
+
+      Log.d("Sensor: ", String.valueOf(sensor));
 
     }
 
@@ -175,6 +178,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
                            requestNewLocationData();
                             Log.d("Latitude:", String.valueOf(location.getLatitude()));
                             Log.d("Longitude:", String.valueOf(location.getLongitude()));
+                            GeomagneticField mGeomagneticField = new GeomagneticField((float)location.getLatitude(),(float)location.getLongitude(),(float)location.getAltitude(),location.getTime());
                            
                         }
                     }
@@ -257,6 +261,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
     //helper guys
     private float computeTrueNorth(float heading) {
         if (mGeomagneticField != null) {
+            Log.d("Declination: ", String.valueOf(mGeomagneticField.getDeclination()));
             return heading + mGeomagneticField.getDeclination();
         } else {
             return heading;
@@ -266,8 +271,8 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
         Location destination = new Location("");
         //west of me => 44.484869171461725, -73.23584437166608  expected 1770m, read 1761
         //east of me => 44.487011, -73.130027 expected 6.95 , read 6662
-        destination.setLatitude(44.484861);
-        destination.setLongitude(-73.23584);
+        destination.setLatitude(44.477251);
+        destination.setLongitude(-73.273222);
         return destination;
     }
 
