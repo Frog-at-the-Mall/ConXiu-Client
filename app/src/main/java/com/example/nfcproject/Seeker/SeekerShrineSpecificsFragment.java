@@ -108,7 +108,7 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
 
 
         float trueHeading = Math.round(computeTrueNorth(sensorEvent.values[0]));//direction you are heading in degrees
-        float relativeBearing = myLocation.bearingTo(myDestination)  - trueHeading; //degrees you are pointing away from the right direction
+        float relativeBearing = myLocation.bearingTo(myDestination) + 360  - trueHeading; //degrees you are pointing away from the right direction
         Log.d("True Heading: " , String.valueOf(trueHeading));
         Log.d("Relative Bearing: " , String.valueOf(relativeBearing));
 
@@ -178,7 +178,8 @@ public class SeekerShrineSpecificsFragment extends Fragment implements SensorEve
                            requestNewLocationData();
                             Log.d("Latitude:", String.valueOf(location.getLatitude()));
                             Log.d("Longitude:", String.valueOf(location.getLongitude()));
-                            GeomagneticField mGeomagneticField = new GeomagneticField((float)location.getLatitude(),(float)location.getLongitude(),(float)location.getAltitude(),location.getTime());
+                            mGeomagneticField = new GeomagneticField((float)location.getLatitude(),(float)location.getLongitude(),(float)location.getAltitude(),location.getTime());
+                            Log.d("Geomagfield", String.valueOf(mGeomagneticField.getDeclination()));
                            
                         }
                     }
